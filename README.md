@@ -81,3 +81,6 @@ pnpm dev
 
 - [Frontend README](client/README.md)
 - [Backend README](server/README.md)
+- [Entwicklungs-Roadmap](ROADMAP.md) - Priorisierte Implementierungsaufgaben
+- [Projekt-Spezifikationen](PROJECT_SPECIFICATIONS.md) - Detaillierte Anforderungen für Dashboard & Gerichteverwaltung
+- [Projektziele](project-goals.md) - MVP-Ziele und Architekturüberblick

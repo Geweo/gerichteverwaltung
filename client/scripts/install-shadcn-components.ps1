@@ -51,7 +51,7 @@ Write-Host "This may take a few minutes..." -ForegroundColor Yellow
 
 foreach ($component in $components) {
   Write-Host "Installing $component..." -ForegroundColor Green
-  npx shadcn-ui@latest add $component --yes --overwrite
+  npx shadcn@latest add $component --yes --overwrite
 }
 
 Write-Host "✅ All components installed!" -ForegroundColor Green

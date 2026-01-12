@@ -44,6 +44,18 @@ Das Projekt verwendet eine hexagonale Architektur (Ports & Adapters):
 
 ## Setup
 
+### 0. Ollama Setup (für Rezept-Generierung)
+
+**Für lokale Entwicklung:**
+1. Installiere Ollama lokal von [ollama.com](https://ollama.com)
+2. Starte Ollama (wird normalerweise automatisch als Service gestartet)
+3. Installiere das Modell: `ollama pull llama3.2`
+4. Prüfe die Verbindung: Öffne `http://localhost:11434/api/tags` im Browser
+
+Die Konfiguration ist bereits in `appsettings.Development.json` eingestellt.
+
+Siehe auch: [OLLAMA_SETUP.md](../../OLLAMA_SETUP.md)
+
 ### 1. Start PostgreSQL Database
 
 **Option A: Docker Compose (empfohlen)**

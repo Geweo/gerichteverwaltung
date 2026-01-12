@@ -68,7 +68,7 @@ let errorCount = 0;
 for (const component of components) {
   try {
     console.log(`📦 Installing ${component}...`);
-    execSync(`npx shadcn-ui@latest add ${component} --yes --overwrite`, {
+    execSync(`npx shadcn@latest add ${component} --yes --overwrite`, {
       cwd: projectRoot,
       stdio: 'inherit',
     });

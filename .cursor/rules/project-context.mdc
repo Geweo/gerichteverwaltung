@@ -1,0 +1,122 @@
+---
+name: project-context
+description: project-context
+---
+
+# Overview
+
+# Project Context Controller (.mdc)
+
+
+## Purpose
+
+This file is the **single authoritative entry point** for contextual understanding of this project.
+
+It defines:
+
+* which documents are authoritative
+* in which order they must be read
+* how the agent (Cursor) must operate
+
+⚠️ **This file does NOT contain knowledge.**
+It only **points to knowledge**.
+
+---
+
+## Core Principle
+
+> **Never duplicate content here.**
+> The referenced files are the single source of truth.
+
+This file acts as a **context controller**, not a documentation layer.
+
+---
+
+## Mandatory Context Files (Read Order)
+
+The following files MUST be read and respected in this exact order:
+
+1. `docs/Grundlagen automation-learning/md_system_regeln.md`
+
+   * Defines the fundamental thinking and learning system
+
+2. `docs/Grundlagen automation-learning/md_architecture_overview.md`
+
+   * Explains the structural flow and system layers
+
+3. `docs/Grundlagen automation-learning/md_folder_structure.md`
+
+   * Defines valid folder boundaries and responsibilities
+
+4. `docs/Grundlagen automation-learning/cursor_rules.md`
+
+   * Defines allowed and forbidden agent behavior
+
+5. `docs/Grundlagen automation-learning/cursor_automation.md`
+
+   * Defines event-based automation and triggers
+
+6. `docs/Grundlagen automation-learning/regeln.md`
+
+   * Active rules derived from validated solutions
+
+---
+
+## Operating Instructions for the Agent
+
+The agent MUST:
+
+* respect system levels (session, analysis, abstraction, meta)
+* follow folder boundaries strictly
+* ask before acting when ambiguity exists
+* prefer proposing over executing
+
+The agent MUST NOT:
+
+* infer rules outside the referenced files
+* merge system levels
+* duplicate or summarize authoritative content here
+
+---
+
+## Scope
+
+* Applies **only** to this project
+* Overrides generic assumptions and defaults
+* Does not replace `AGENTS.md` (code-only rules)
+
+---
+
+## Relationship to Other Control Files
+
+* `AGENTS.md` → governs **code structure and implementation only**
+* `.agent/rules/project-rules.md` → governs **project-wide rules and references**
+* This `.mdc` → governs **project context and system behavior**
+
+These files must never overlap in responsibility.
+
+---
+
+## Language & Communication
+
+* Primary language: **German**
+* Clarity and explicitness are preferred over brevity
+
+---
+
+## Change Policy
+
+This file should be changed:
+
+* rarely
+* consciously
+* only when the system architecture or control flow changes
+
+Unnecessary changes weaken system stability.
+
+---
+
+## Final Rule
+
+> **If something is unclear, consult the referenced files — never guess.**
+

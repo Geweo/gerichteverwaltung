@@ -1,0 +1,64 @@
+# Docker-Services für lokale Entwicklung (nur Local)
+# - postgres: Anwendungs-DB (ernaehrbar) für EF Core
+# - ollama: Lokales LLM für Rezeptgenerierung
+# - localstack: S3 für PDF/Datei-Upload (nur Local; Dev/Prod: Supabase Storage)
+# Supabase (Auth): lokal via supabase start | Dev/Prod: Supabase Cloud
+# Siehe docs/ARCHITECTURE.md und docs/LOCAL_SETUP.md
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ernaehrbar-postgres
+    # App-DB: ernaehrbar (ConnectionStrings:DefaultConnection)
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ernaehrbar
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  
+
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-ai
+    # LLM: Rezeptgenerierung, Tag-Extraktion (LLM:Ollama:Url)
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_PORT=11434
+    restart: unless-stopped
+
+  localstack:
+    image: localstack/localstack:3
+    container_name: ernaehrbar-localstack
+    # S3 für PDF-Upload (nur Local); Dev/Prod nutzt Supabase Storage
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEBUG=0
+      - PERSISTENCE=1
+      - AWS_DEFAULT_REGION=eu-central-1
+    volumes:
+      - localstack_data:/var/lib/localstack
+
+volumes:
+  postgres_data:
+  ollama_data:
+  localstack_data:
+
+

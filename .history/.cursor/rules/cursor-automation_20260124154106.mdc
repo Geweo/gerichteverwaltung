@@ -1,0 +1,182 @@
+---
+name: cursor-automation
+description: This is a new rule
+---
+
+# Overview
+
+# CURSOR_AUTOMATION.md
+
+## Zweck
+
+Dieses Dokument definiert die **Automatisierungslogik** für die Nutzung des MD-Systems mit **Cursor**.
+
+Es beantwortet nicht *was richtig ist* (Regeln), sondern:
+
+> **Wann muss Cursor was tun?**
+
+Dieses Dokument ist der **Workflow-Motor** zwischen:
+- Input
+- Analyse
+- Abstraktion
+- Meta-Steuerung
+
+---
+
+## Grundprinzip
+
+- Automatisierung ist **ereignisgetrieben**, nicht zeitgetrieben
+- Cursor **führt nichts stillschweigend aus**
+- Automatisierung bedeutet:
+  - erinnern
+  - vorschlagen
+  - vorbereiten
+
+Nicht:
+- selbstständig entscheiden
+- abstrahieren ohne Auftrag
+
+---
+
+## Globale Voraussetzungen
+
+Vor jeder automatischen Aktion muss Cursor:
+
+1. `md-system-regeln.md`
+2. `md-architecture-overview.md`
+3. `CURSOR_RULES.md`
+4. `CURSOR_AUTOMATION.md`
+
+kennen und beachten.
+
+---
+
+## Trigger → Aktionen
+
+### Trigger 1: Neue `session_*.md`
+
+**Erkennung**  
+- Neue Datei mit Präfix `session_`
+
+**Pflichtaktionen**  
+- Prüfen, ob `__folder_summary.md` existiert
+- Falls ja: Hinweis „Summary aktualisieren?“
+- Falls nein: Vorschlag zur Erstellung
+
+**Verboten**  
+- Ableiten von Schwächen
+- Vorschlagen von Lösungen
+
+---
+
+### Trigger 2: Änderung in `__folder_summary.md`
+
+**Erkennung**  
+- Inhaltliche Änderung
+
+**Pflichtaktionen**  
+- Prüfen, ob ≥2 vergleichbare Sessions vorliegen
+- Falls nein: Hinweis „noch keine Ableitung möglich“
+
+**Optional**  
+- Vorschlag zur Erstellung eines `analysis_*.md`
+
+---
+
+### Trigger 3: Neue oder geänderte `analysis_*.md`
+
+**Erkennung**  
+- Neue Analyse-Datei
+
+**Pflichtaktionen**  
+- Prüfen, ob neue Muster **explizit benannt** sind
+- Hinweis: „Kandidat für Schwäche?“ (nur Vorschlag)
+
+**Verboten**  
+- Automatisches Schreiben in `schwaechen.md`
+
+---
+
+### Trigger 4: Änderung in `schwaechen.md`
+
+**Erkennung**  
+- Neuer Eintrag oder Statusänderung
+
+**Pflichtaktionen**  
+- Prüfen, ob passende Lösung in `loesungen.md` existiert
+- Falls nein: Vorschlag zur Lösungsdefinition
+
+---
+
+### Trigger 5: Lösung Status = `validiert`
+
+**Erkennung**  
+- Statusänderung in `loesungen.md`
+
+**Pflichtaktionen**  
+- Vorschlag: Regel in `regeln.md` ableiten
+
+---
+
+### Trigger 6: Änderung in `regeln.md`
+
+**Erkennung**  
+- Neue oder geänderte Regel
+
+**Pflichtaktionen**  
+- Hinweis: zukünftige Sessions unterliegen neuer Regel
+
+---
+
+### Trigger 7: Mehrere Änderungen (Systemzustand)
+
+**Erkennung**  
+- Änderungen in ≥2 Kern-MDs
+
+**Pflichtaktionen**  
+- Vorschlag zur Aktualisierung von `marc_overview.md`
+
+---
+
+## Schutzmechanismen
+
+- Cursor darf **nie mehrere Ebenen gleichzeitig verändern**
+- Cursor darf **keine Abstraktion ohne explizite Zustimmung** durchführen
+- Jeder Automationsschritt ist **vorschlagend**, nicht ausführend
+
+---
+
+## Typischer automatisierter Ablauf (Beispiel)
+
+```text
+Neue Session
+→ Cursor erinnert an Summary
+→ Summary geändert
+→ Cursor schlägt Analyse vor
+→ Analyse erstellt
+→ Cursor erkennt Muster
+→ schlägt Schwäche vor
+→ Nutzer bestätigt
+```
+
+---
+
+## Rolle dieses Dokuments
+
+Dieses Dokument:
+- verbindet alle MDs zu einem Workflow
+- macht Cursor proaktiv, aber kontrolliert
+- verhindert vergessene Schritte
+
+Es ist die **fehlende Schicht zwischen Regeln und Nutzung**.
+
+---
+
+## Gültigkeit
+
+Dieses Dokument gilt:
+- für alle Themen
+- für alle Sessions
+- für jede Nutzung von Cursor in diesem Projekt
+
+Änderungen erfolgen bewusst und sparsam.

@@ -12,6 +12,7 @@ export default defineConfig({
       target: './src/generated/api',
       schemas: './src/generated/api/schemas',
       client: 'react-query',
+      httpClient: 'axios',
       mock: false,
       override: {
         mutator: {
@@ -22,8 +23,9 @@ export default defineConfig({
           useQuery: true,
           useInfinite: true,
           useInfiniteQueryParam: 'page',
-          options: {
-            staleTime: 1000 * 60 * 5, // 5 minutes
+          queryOptions: {
+            path: './src/lib/query-options.ts',
+            name: 'useQueryOptions',
           },
         },
       },
@@ -33,4 +35,3 @@ export default defineConfig({
     },
   },
 });
-

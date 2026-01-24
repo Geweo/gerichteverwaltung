@@ -8,7 +8,9 @@ Das Projekt verwendet eine hexagonale Architektur (Ports & Adapters):
 
 - **Ernaehrbar.Parts**: Domain und Application Layer
   - `Ports/`: Interface-Definitionen für externe Abhängigkeiten
-  - `UseCases/`: Anwendungsfälle
+  - `Commands/`, `Handlers/`: MediatR-Commands und -Handler (CQRS-ähnlich)
+  - `Models/`: z.B. MealPlanResult
+  - `Validation/`: Domänen-Validierung (z.B. PromptValidator)
 - **Ernaehrbar.Adapters.Infrastructure**: Infrastructure Adapter
   - EF Core + PostgreSQL
   - Supabase Storage
@@ -35,8 +37,8 @@ Das Projekt verwendet eine hexagonale Architektur (Ports & Adapters):
 ## Backend Details
 
 - Supabase-JWT Middleware
-- Ports: RecipeStorage, BringExporter
-- UseCases: UploadRecipe, GeneratePlan, ExportToBring
+- Ports: IRecipeStorage, IBringExporter, ILLMService
+- MediatR: Commands/Handler (GenerateRecipes, RegenerateRecipe, UploadRecipe, ExportToBring)
 - Infrastruktur: EF Core + PostgreSQL
 - Architektur: hexagonal
 - Logging: Serilog

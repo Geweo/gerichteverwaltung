@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ernaehrbar.Parts\Ernaehrbar.Parts.csproj" />
     <ProjectReference Include="..\Ernaehrbar.Adapters.Api\Ernaehrbar.Adapters.Api.csproj" />
-    <ProjectReference Include="..\Ernaehrbar.Adapters.Infrastructure\Ernaehrbar.Adapters.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

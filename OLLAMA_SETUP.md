@@ -32,12 +32,12 @@ docker-compose up -d ollama
 
 **Option A: Direkt (empfohlen)**
 ```bash
-docker exec ernaehrbar-ollama ollama pull llama3.2
+docker exec ollama-ai ollama pull llama3.2
 ```
 
 **Option B: Interaktiv (falls Option A fehlschlägt)**
 ```bash
-docker exec -it ernaehrbar-ollama sh
+docker exec -it ollama-ai sh
 ollama pull llama3.2
 exit
 ```
@@ -49,7 +49,7 @@ exit
 
 3. Prüfe, ob das Modell installiert wurde:
 ```bash
-docker exec ernaehrbar-ollama ollama list
+docker exec ollama-ai ollama list
 ```
 
 ## Fehlerbehebung
@@ -64,7 +64,7 @@ Dieser Fehler kann auftreten, wenn:
 **Lösungen:**
 1. Container neu starten:
    ```bash
-   docker restart ernaehrbar-ollama
+   docker restart ollama-ai
    ```
 
 2. Container neu erstellen:

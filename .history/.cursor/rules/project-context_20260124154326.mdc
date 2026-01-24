@@ -1,0 +1,32 @@
+---
+name: project-context
+description: This is a new rule
+---
+
+# Overview
+
+# Project Context Controller (.mdc)
+
+## Purpose
+This file defines which documents provide authoritative context for this project.
+Do not duplicate content. Always read the referenced files directly.
+
+## Mandatory Context Files (Read Order)
+1. md-knowledge/00_system/md-system-regeln.md
+2. md-knowledge/00_system/md-architecture-overview.md
+3. md-knowledge/00_system/md-folder-structure.md
+4. md-knowledge/00_system/CURSOR_RULES.md
+5. md-knowledge/00_system/CURSOR_AUTOMATION.md
+
+## Operating Instructions
+- Do not infer rules outside these documents
+- Do not copy their content here
+- Always respect system levels and folder structure
+
+## Scope
+- Applies to this project only
+- Overrides global assumptions
+
+## Language
+- German
+

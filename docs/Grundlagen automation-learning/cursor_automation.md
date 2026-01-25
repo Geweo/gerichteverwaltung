@@ -86,17 +86,17 @@ kennen und beachten.
 - Hinweis: „Kandidat für Schwäche?“ (nur Vorschlag)
 
 **Verboten**  
-- Automatisches Schreiben in `schwaechen.md`
+- Automatisches Schreiben in `schwaechen/` (nur Index-Datei `schwaechen.md`)
 
 ---
 
-### Trigger 4: Änderung in `schwaechen.md`
+### Trigger 4: Änderung in `schwaechen/` oder `schwaechen.md`
 
 **Erkennung**  
-- Neuer Eintrag oder Statusänderung
+- Neue Datei in `schwaechen/` oder Änderung in Index-Datei
 
 **Pflichtaktionen**  
-- Prüfen, ob passende Lösung in `loesungen.md` existiert
+- Prüfen, ob passende Lösung in `solutions/` existiert
 - Falls nein: Vorschlag zur Lösungsdefinition
 
 ---
@@ -104,14 +104,14 @@ kennen und beachten.
 ### Trigger 5: Lösung Status = `validiert`
 
 **Erkennung**  
-- Statusänderung in `loesungen.md`
+- Statusänderung in `solutions/` Dateien
 
 **Pflichtaktionen**  
-- Vorschlag: Regel in `regeln.md` ableiten
+- Vorschlag: Regel in `rules/` ableiten
 
 ---
 
-### Trigger 6: Änderung in `regeln.md`
+### Trigger 6: Änderung in `rules/`
 
 **Erkennung**  
 - Neue oder geänderte Regel

@@ -37,6 +37,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRecipeStorage, RecipeStorageAdapter>();
         services.AddScoped<IBringExporter, BringExporterAdapter>();
 
+        // Write-Repositories
+        services.AddScoped<IRecipeDraftRepository, Repositories.RecipeDraftRepository>();
+        services.AddScoped<IRecipeRepository, Repositories.RecipeRepository>();
+        services.AddScoped<IShoppingListRepository, Repositories.ShoppingListRepository>();
+        services.AddScoped<INotificationRepository, Repositories.NotificationRepository>();
+        services.AddScoped<IGroupRepository, Repositories.GroupRepository>();
+        services.AddScoped<IUserRepository, Repositories.UserRepository>();
+
         // Read-Repositories (Read-optimiert)
         services.AddScoped<IRecipeReadRepository, RecipeReadRepository>();
         services.AddScoped<IMealPlanReadRepository, MealPlanReadRepository>();

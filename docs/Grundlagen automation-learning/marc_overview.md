@@ -23,11 +23,13 @@ Es ist das **Meta-Dokument** zur Orientierung und Priorisierung.
 
 ## Aktive Schwächen (Auszug)
 
-> Quelle: `schwaechen.md`
+> Quelle: `schwaechen.md` (Index) → `schwaechen/` (Einzeldateien)
 
 - **Implizite Zieldefinition** – *aktiv*
 - **Vermischung von Ebenen** – *aktiv*
 - **Spätes Externalisieren von Struktur** – *aktiv*
+- **Späte Erkennung von Entity-Struktur-Details** – *aktiv*
+- **Namespace-Mehrdeutigkeiten durch parallele Strukturen** – *aktiv*
 
 ➡️ Alle Schwächen sind aktuell **in Bearbeitung** und besitzen aktive Lösungen.
 
@@ -35,11 +37,13 @@ Es ist das **Meta-Dokument** zur Orientierung und Priorisierung.
 
 ## Aktive Lösungen
 
-> Quelle: `loesungen.md`
+> Quelle: `loesungen.md` (Index) → `solutions/` (Einzeldateien)
 
 - Explizite Zieldefinition erzwingen
 - Trennung der Ebenen erzwingen
 - Struktur früh externalisieren
+- Entity-Strukturen vor Implementierung prüfen
+- Namespace-Aliases bei bekannten Mehrdeutigkeiten
 
 **Validierungsstatus:**
 - Alle Lösungen: *aktiv*, noch nicht validiert
@@ -48,11 +52,15 @@ Es ist das **Meta-Dokument** zur Orientierung und Priorisierung.
 
 ## Geltende Regeln (bindend)
 
-> Quelle: `regeln.md`
+> Quelle: `regeln.md` (Index) → `rules/` (Einzeldateien)
 
 - Explizite Zieldefinition ist Pflicht
 - Ebenen dürfen nicht vermischt werden
 - Struktur wird früh externalisiert
+- Top-Level Statements Pattern für Tests
+- Namespace-Management bei Domain/Entities-Parallelität
+- Package-Referenzen: Nur explizit, was benötigt wird
+- Systematische Build-Fehler-Analyse
 
 ➡️ Regeln gelten **systemweit** für Mensch und Cursor.
 

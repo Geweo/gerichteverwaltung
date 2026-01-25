@@ -62,9 +62,9 @@ Die Architektur trennt bewusst:
 **Zweck:** Dauerhafte Erkenntnisse erzeugen
 
 **MD-Typen:**
-- `schwaechen.md` – wiederkehrende Muster / Probleme
-- `loesungen.md` – systematische Verbesserungen
-- `regeln.md` – abgeleitete Verhaltensregeln
+- `schwaechen.md` (Index) → `schwaechen/` – wiederkehrende Muster / Probleme
+- `loesungen.md` (Index) → `solutions/` – systematische Verbesserungen
+- `regeln.md` (Index) → `rules/` – abgeleitete Verhaltensregeln
 
 **Regeln:**
 - zeitlos
@@ -90,15 +90,17 @@ Die Architektur trennt bewusst:
 ## Informationsfluss (Pipeline)
 
 ```text
-session_*.md
+sessions/session_*.md
    ↓
-__folder_summary.md
+folder_summary.md
    ↓
-schwaechen.md
+analysis/analysis_*.md
    ↓
-loesungen.md
+schwaechen/schwaechen_*.md
    ↓
-regeln.md
+solutions/solution_*.md
+   ↓
+rules/rule_*.md
    ↓
 bessere Sessions
 ```

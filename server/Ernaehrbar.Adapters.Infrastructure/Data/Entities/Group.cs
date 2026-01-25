@@ -35,4 +35,24 @@ public class Group : BaseEntity
     /// Navigation property to group invites.
     /// </summary>
     public ICollection<GroupInvite> Invites { get; set; } = new List<GroupInvite>();
+
+    /// <summary>
+    /// Navigation property to recipe drafts belonging to this group.
+    /// </summary>
+    public ICollection<RecipeDraft> RecipeDrafts { get; set; } = new List<RecipeDraft>();
+
+    /// <summary>
+    /// Navigation property to upload tasks belonging to this group.
+    /// </summary>
+    public ICollection<UploadTask> UploadTasks { get; set; } = new List<UploadTask>();
+
+    /// <summary>
+    /// Navigation property to files belonging to this group.
+    /// </summary>
+    public ICollection<File> Files { get; set; } = new List<File>();
+
+    /// <summary>
+    /// Navigation property to shopping lists belonging to this group.
+    /// </summary>
+    public ICollection<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
 }

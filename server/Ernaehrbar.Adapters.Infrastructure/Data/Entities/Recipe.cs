@@ -1,3 +1,5 @@
+using Ernaehrbar.Parts.Ports;
+
 namespace Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 
 /// <summary>
@@ -46,6 +48,22 @@ public class Recipe : BaseGroupEntity
     public int? CookingTimeMinutes { get; set; }
 
     /// <summary>
+    /// Source/Origin of the recipe (Generated, Upload, Manual).
+    /// </summary>
+    public RecipeSource Source { get; set; } = RecipeSource.Manual;
+
+    /// <summary>
+    /// Meal category this recipe is typically used for (nullable, can be flexible).
+    /// </summary>
+    public MealCategory? MealCategory { get; set; }
+
+    /// <summary>
+    /// Repeat cycle in weeks (e.g., 2 = repeat every 2 weeks).
+    /// Null means no automatic repetition.
+    /// </summary>
+    public int? RepeatCycleWeeks { get; set; }
+
+    /// <summary>
     /// Navigation property to ingredients.
     /// </summary>
     public ICollection<RecipeIngredient> Ingredients { get; set; } = new List<RecipeIngredient>();
@@ -69,4 +87,9 @@ public class Recipe : BaseGroupEntity
     /// Navigation property to meal plan entries.
     /// </summary>
     public ICollection<MealPlanEntry> MealPlanEntries { get; set; } = new List<MealPlanEntry>();
+
+    /// <summary>
+    /// Navigation property to files associated with this recipe.
+    /// </summary>
+    public ICollection<Entities.File> Files { get; set; } = new List<Entities.File>();
 }

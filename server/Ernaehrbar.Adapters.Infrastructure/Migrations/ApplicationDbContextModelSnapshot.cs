@@ -22,6 +22,67 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("FileSizeBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RecipeDraftId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RecipeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("UploadedByUserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("RecipeDraftId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.HasIndex("UploadedByUserId");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", b =>
                 {
                     b.Property<int>("Id")
@@ -172,6 +233,9 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -227,6 +291,50 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("MealPlanId", "Date", "MealCategory");
 
                     b.ToTable("MealPlanEntries");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ActionLink")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ReadAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.NutritionInfo", b =>
@@ -307,6 +415,9 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.Property<string>("Instructions")
                         .HasColumnType("text");
 
+                    b.Property<int?>("MealCategory")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -317,7 +428,13 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.Property<int?>("PreparationTimeMinutes")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("RepeatCycleWeeks")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("Servings")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Source")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -330,6 +447,113 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraft", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("CreatedByUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Instructions")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("MealCategory")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OriginalData")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("ReviewedByUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Source")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("ReviewedByUserId");
+
+                    b.ToTable("RecipeDrafts");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraftIngredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("RecipeDraftId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeDraftId");
+
+                    b.ToTable("RecipeDraftIngredients");
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeIngredient", b =>
@@ -453,6 +677,104 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.ToTable("RecipeTags");
                 });
 
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("CreatedByUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("ForWeekEndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ForWeekStartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("ShoppingLists");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingListItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("IngredientName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsChecked")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("RecipeIngredientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ShoppingListId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeIngredientId");
+
+                    b.HasIndex("ShoppingListId");
+
+                    b.ToTable("ShoppingListItems");
+                });
+
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -489,6 +811,58 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.UploadTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RecipeDraftId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("RecipeDraftId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UploadTasks");
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", b =>
@@ -528,6 +902,39 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.File", b =>
+                {
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", "Group")
+                        .WithMany("Files")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraft", "RecipeDraft")
+                        .WithMany("Files")
+                        .HasForeignKey("RecipeDraftId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Recipe", "Recipe")
+                        .WithMany("Files")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", "UploadedByUser")
+                        .WithMany("UploadedFiles")
+                        .HasForeignKey("UploadedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Recipe");
+
+                    b.Navigation("RecipeDraft");
+
+                    b.Navigation("UploadedByUser");
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.GroupInvite", b =>
@@ -597,6 +1004,17 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.Navigation("Recipe");
                 });
 
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Notification", b =>
+                {
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.NutritionInfo", b =>
                 {
                     b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Recipe", "Recipe")
@@ -617,6 +1035,43 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraft", b =>
+                {
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", "CreatedByUser")
+                        .WithMany("CreatedRecipeDrafts")
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", "Group")
+                        .WithMany("RecipeDrafts")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", "ReviewedByUser")
+                        .WithMany("ReviewedRecipeDrafts")
+                        .HasForeignKey("ReviewedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("ReviewedByUser");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraftIngredient", b =>
+                {
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraft", "RecipeDraft")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeDraftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RecipeDraft");
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeIngredient", b =>
@@ -668,6 +1123,43 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingList", b =>
+                {
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", "CreatedByUser")
+                        .WithMany("CreatedShoppingLists")
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", "Group")
+                        .WithMany("ShoppingLists")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingListItem", b =>
+                {
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeIngredient", "RecipeIngredient")
+                        .WithMany()
+                        .HasForeignKey("RecipeIngredientId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingList", "ShoppingList")
+                        .WithMany("Items")
+                        .HasForeignKey("ShoppingListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RecipeIngredient");
+
+                    b.Navigation("ShoppingList");
+                });
+
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Tag", b =>
                 {
                     b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", "Group")
@@ -679,15 +1171,49 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.UploadTask", b =>
+                {
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", "Group")
+                        .WithMany("UploadTasks")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraft", "RecipeDraft")
+                        .WithMany()
+                        .HasForeignKey("RecipeDraftId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", "User")
+                        .WithMany("UploadTasks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("RecipeDraft");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", b =>
                 {
+                    b.Navigation("Files");
+
                     b.Navigation("Invites");
 
                     b.Navigation("MealPlans");
 
                     b.Navigation("Members");
 
+                    b.Navigation("RecipeDrafts");
+
                     b.Navigation("Recipes");
+
+                    b.Navigation("ShoppingLists");
+
+                    b.Navigation("UploadTasks");
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.MealPlan", b =>
@@ -697,6 +1223,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Recipe", b =>
                 {
+                    b.Navigation("Files");
+
                     b.Navigation("Ingredients");
 
                     b.Navigation("MealPlanEntries");
@@ -708,6 +1236,18 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.Navigation("RecipeTags");
                 });
 
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraft", b =>
+                {
+                    b.Navigation("Files");
+
+                    b.Navigation("Ingredients");
+                });
+
+            modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingList", b =>
+                {
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Tag", b =>
                 {
                     b.Navigation("RecipeTags");
@@ -715,7 +1255,19 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", b =>
                 {
+                    b.Navigation("CreatedRecipeDrafts");
+
+                    b.Navigation("CreatedShoppingLists");
+
                     b.Navigation("GroupMemberships");
+
+                    b.Navigation("Notifications");
+
+                    b.Navigation("ReviewedRecipeDrafts");
+
+                    b.Navigation("UploadTasks");
+
+                    b.Navigation("UploadedFiles");
                 });
 #pragma warning restore 612, 618
         }

@@ -25,4 +25,34 @@ public class User : BaseEntity
     /// Navigation property to group memberships.
     /// </summary>
     public ICollection<GroupMember> GroupMemberships { get; set; } = new List<GroupMember>();
+
+    /// <summary>
+    /// Navigation property to recipe drafts created by this user.
+    /// </summary>
+    public ICollection<RecipeDraft> CreatedRecipeDrafts { get; set; } = new List<RecipeDraft>();
+
+    /// <summary>
+    /// Navigation property to recipe drafts reviewed by this user.
+    /// </summary>
+    public ICollection<RecipeDraft> ReviewedRecipeDrafts { get; set; } = new List<RecipeDraft>();
+
+    /// <summary>
+    /// Navigation property to upload tasks created by this user.
+    /// </summary>
+    public ICollection<UploadTask> UploadTasks { get; set; } = new List<UploadTask>();
+
+    /// <summary>
+    /// Navigation property to files uploaded by this user.
+    /// </summary>
+    public ICollection<File> UploadedFiles { get; set; } = new List<File>();
+
+    /// <summary>
+    /// Navigation property to shopping lists created by this user.
+    /// </summary>
+    public ICollection<ShoppingList> CreatedShoppingLists { get; set; } = new List<ShoppingList>();
+
+    /// <summary>
+    /// Navigation property to notifications for this user.
+    /// </summary>
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

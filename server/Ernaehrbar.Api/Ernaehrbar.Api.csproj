@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Ernaehrbar.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Ernaehrbar.Adapters.Api\Ernaehrbar.Adapters.Api.csproj" />
   </ItemGroup>
 

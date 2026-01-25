@@ -20,12 +20,18 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NSubstitute" Version="5.3.0" />
+    <PackageReference Include="Shouldly" Version="4.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.XUnit" Version="3.0.19" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Ernaehrbar.Parts\Ernaehrbar.Parts.csproj" />
     <ProjectReference Include="..\Ernaehrbar.Adapters.Infrastructure\Ernaehrbar.Adapters.Infrastructure.csproj" />
     <ProjectReference Include="..\Ernaehrbar.Adapters.Api\Ernaehrbar.Adapters.Api.csproj" />
+    <ProjectReference Include="..\Ernaehrbar.Api\Ernaehrbar.Api.csproj" />
+    <ProjectReference Include="..\Ernaehrbar.Fixtures\Ernaehrbar.Fixtures.csproj" />
   </ItemGroup>
 
 </Project>

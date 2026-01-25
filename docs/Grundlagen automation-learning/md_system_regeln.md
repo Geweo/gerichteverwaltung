@@ -79,9 +79,9 @@ Eigenschaften:
 
 **Zweck:** Dauerhafte Erkenntnisse ableiten
 
-- `schwaechen.md`
-- `loesungen.md`
-- `regeln.md`
+- `schwaechen.md` (Index) → `schwaechen/` (Einzeldateien)
+- `loesungen.md` (Index) → `solutions/` (Einzeldateien)
+- `regeln.md` (Index) → `rules/` (Einzeldateien)
 
 Eigenschaften:
 - zeitlos

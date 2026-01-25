@@ -5,7 +5,7 @@ using Ernaehrbar.Parts.Validation;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Ernaehrbar.Adapters.Api;
 
@@ -40,40 +40,13 @@ public static class ServiceCollectionExtensions
             cfg.AddOpenBehavior(typeof(FluentValidationBehavior<,>));
         });
 
-        // API Explorer und Swagger
+        // API Explorer und OpenAPI (für Scalar)
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(options =>
+        services.AddOpenApi(opts =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "Ernährbär API",
-                Version = "v1",
-                Description = "API für den Rezept- & Zutatenplaner mit Bring-Anbindung"
-            });
-
-            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                Name = "Authorization",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
-            });
-
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    Array.Empty<string>()
-                }
-            });
+            // Default ist bereits OpenApi3_1, aber explizit setzen für Klarheit
+            // Falls Probleme auftreten, auf OpenApi3_0 wechseln
+            opts.OpenApiVersion = OpenApiSpecVersion.OpenApi3_0;
         });
 
         return services;

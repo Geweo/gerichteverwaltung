@@ -2,11 +2,9 @@
 
 ## Zweck
 
-Dieses Dokument sammelt **abstrakte, wiederkehrende Schwächen**,
+Dieses Dokument ist ein **Index** für alle dokumentierten Schwächen.
 
-die **ausschließlich** aus Analyse- und Summary-Dokumenten abgeleitet werden.
-
-Es enthält **keine Einzelfälle**, keine Tagesmeinungen und keine spontanen Bewertungen.
+Die einzelnen Schwächen befinden sich im Ordner `schwaechen/` im Format `schwaechen_YYYY-MM-DD_thema.md`.
 
 ---
 
@@ -43,57 +41,13 @@ Aus welchen Analysen / Summaries wurde dies abgeleitet?
 
 ## Aktive Schwächen
 
-### Implizite Zieldefinition
+Siehe: `schwaechen/` Ordner
 
-**Beschreibung**  
-Ziele, Nicht-Ziele und Constraints werden häufig vorausgesetzt,
-aber nicht explizit benannt.
-
-**Auswirkung**  
-- Richtungswechsel
-- unnötige Rückfragen
-- inkonsistente Ergebnisse
-
-**Beobachtungsbasis**  
-- Mehrere Analyse- und Architektur-Diskussionen
-
-**Status**  
-- aktiv
-
----
-
-### Vermischung von Ebenen
-
-**Beschreibung**  
-Input-, Analyse- und Abstraktionsebenen werden gedanklich zu früh vermischt.
-
-**Auswirkung**  
-- vorschnelle Verallgemeinerung
-- unsaubere Ableitungen
-
-**Beobachtungsbasis**  
-- Architektur-Reflexionen
-
-**Status**  
-- aktiv
-
----
-
-### Spätes Externalisieren von Struktur
-
-**Beschreibung**  
-Gedankliche Modelle werden lange intern optimiert,
-bevor sie als MD festgehalten werden.
-
-**Auswirkung**  
-- unnötige Iterationen
-- fehlende gemeinsame Referenz
-
-**Beobachtungsbasis**  
-- Meta-Reflexionen
-
-**Status**  
-- aktiv
+- [[schwaechen_2026-01-24_implizite-zieldefinition]]
+- [[schwaechen_2026-01-24_vermischung-von-ebenen]]
+- [[schwaechen_2026-01-24_spaetes-externalisieren-von-struktur]]
+- [[schwaechen_2026-01-24_spaete-erkennung-entity-struktur-details]]
+- [[schwaechen_2026-01-24_namespace-mehrdeutigkeiten-parallele-strukturen]]
 
 ---
 
@@ -105,7 +59,7 @@ bevor sie als MD festgehalten werden.
 
 ## Verbindung zu Lösungen
 
-- Jede aktive Schwäche **muss** mindestens eine Lösung in `loesungen.md` besitzen
+- Jede aktive Schwäche **muss** mindestens eine Lösung in [[solutions/]] besitzen
 - Statusänderungen werden dort ausgelöst, nicht hier
 
 ---
@@ -113,9 +67,9 @@ bevor sie als MD festgehalten werden.
 ## Rolle dieses Dokuments
 
 Dieses Dokument ist:
+- **Index und Strukturdefinition**
 - langfristig gültig
 - abstrahiert
 - bewusst knapp gehalten
 
-Es dient als **Input für Lösungs- und Regeldefinitionen**.
-
+Es dient als **Input für Lösungs- und Regeldefinitionen** und als **Übersicht** über alle Schwächen.

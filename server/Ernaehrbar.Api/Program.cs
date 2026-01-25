@@ -4,6 +4,7 @@ using Ernaehrbar.Adapters.Api.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,9 +21,13 @@ builder.Host.UseSerilog();
 // Configure Supabase JWT Authentication
 var supabaseUrl = builder.Configuration["Supabase:Url"] ?? throw new InvalidOperationException("Supabase:Url is not configured");
 var jwksUrl = builder.Configuration["Supabase:JwksUrl"] ?? throw new InvalidOperationException("Supabase:JwksUrl is not configured");
+var jwtSecret = builder.Configuration["Supabase:JwtSecret"];
 
 // Supabase JWT tokens use the auth endpoint as issuer, not the base URL
 var supabaseIssuer = $"{supabaseUrl.TrimEnd('/')}/auth/v1";
+
+// Für Tests: Wenn JwtSecret gesetzt ist, verwende HS256 (symmetric), sonst JWKS (asymmetric)
+var useJwtSecret = !string.IsNullOrEmpty(jwtSecret) && jwtSecret.Length >= 32;
 
 // Cache for JWKS to avoid fetching on every request
 var jwksCache = new System.Collections.Concurrent.ConcurrentDictionary<string, Microsoft.IdentityModel.Tokens.JsonWebKeySet>();
@@ -40,34 +45,53 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             options.RequireHttpsMetadata = false;
         }
         
-        options.TokenValidationParameters = new TokenValidationParameters
+        if (useJwtSecret)
         {
-            ValidateIssuer = true,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+            // HS256 (symmetric) für lokale Entwicklung/Tests
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                try
+                ValidateIssuer = true,
+                ValidIssuer = supabaseIssuer,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                    System.Text.Encoding.UTF8.GetBytes(jwtSecret!)),
+                ClockSkew = TimeSpan.FromMinutes(2)
+            };
+        }
+        else
+        {
+            // ES256 (asymmetric) mit JWKS für Cloud
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
                 {
-                    // Use cached JWKS or fetch from endpoint
-                    var jwks = jwksCache.GetOrAdd(jwksUrl, url =>
+                    try
                     {
-                        Log.Information("Fetching JWKS from {JwksUrl}", url);
-                        var response = jwksHttpClient.GetStringAsync(url).GetAwaiter().GetResult();
-                        return new Microsoft.IdentityModel.Tokens.JsonWebKeySet(response);
-                    });
-                    
-                    return jwks.GetSigningKeys();
-                }
-                catch (Exception ex)
-                {
-                    Log.Warning(ex, "Failed to fetch JWKS from {JwksUrl}. Error: {Error}", jwksUrl, ex.Message);
-                    throw;
-                }
-            },
-            ValidIssuer = supabaseIssuer
-        };
+                        // Use cached JWKS or fetch from endpoint
+                        var jwks = jwksCache.GetOrAdd(jwksUrl, url =>
+                        {
+                            Log.Information("Fetching JWKS from {JwksUrl}", url);
+                            var response = jwksHttpClient.GetStringAsync(url).GetAwaiter().GetResult();
+                            return new Microsoft.IdentityModel.Tokens.JsonWebKeySet(response);
+                        });
+                        
+                        return jwks.GetSigningKeys();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warning(ex, "Failed to fetch JWKS from {JwksUrl}. Error: {Error}", jwksUrl, ex.Message);
+                        throw;
+                    }
+                },
+                ValidIssuer = supabaseIssuer
+            };
+        }
     });
 
 // Add CORS
@@ -116,21 +140,30 @@ if (!app.Environment.IsDevelopment() && app.Environment.EnvironmentName != "Loca
 // CORS must be before Authentication/Authorization
 app.UseCors();
 
-// Swagger MUSS vor Authentication/Authorization kommen, damit Swagger-Routen ohne Auth funktionieren
-// Swagger UI für Development und Local aktivieren
+// OpenAPI & Scalar MUSS vor Authentication/Authorization kommen, damit Routen ohne Auth funktionieren
+// Scalar UI für Development und Local aktivieren
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Local")
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app.MapOpenApi();
+    
+    app.MapScalarApiReference(opts =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ernährbär API v1");
-        c.RoutePrefix = "swagger"; // Swagger UI at /swagger
+        opts.DynamicBaseServerUrl = true;
+        opts.WithTitle("Ernährbär API");
+        opts.EnableDarkMode();
+        opts.WithTheme(Scalar.AspNetCore.ScalarTheme.BluePlanet);
+        opts.ShowOperationId = true;
+        opts.AddServer("http://localhost:5000/api/");
+        opts.AddPreferredSecuritySchemes("Bearer");
     });
+    
+    Log.Information("📚 Scalar UI available at: http://localhost:5000/scalar");
+    Log.Information("📄 OpenAPI JSON available at: http://localhost:5000/openapi/v1.json");
 }
 else
 {
-    // In Production: Nur Swagger JSON für API-Client-Generierung, kein UI
-    app.UseSwagger();
+    // In Production: Nur OpenAPI JSON für API-Client-Generierung, kein UI
+    app.MapOpenApi();
 }
 
 app.UseAuthentication();
@@ -139,10 +172,10 @@ app.MapControllers();
 
 // Log startup information
 Log.Information("🚀 Ernährbär API starting...");
-var swaggerUrl = (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Local")
-    ? $"http://localhost:5000/swagger" 
-    : "N/A";
-Log.Information("📚 Swagger UI available at: {SwaggerUrl}", swaggerUrl);
 
 app.Run();
+
+// Öffentliche Program-Klasse für Tests (Top-Level Statements erzeugen eine interne Klasse im globalen Namespace)
+// Diese partial class macht sie öffentlich zugänglich
+public partial class Program { }
 

@@ -26,6 +26,11 @@ public class MealPlan : BaseGroupEntity
     public string? GenerationPrompt { get; set; }
 
     /// <summary>
+    /// Status of the meal plan (Draft, Active, Archived).
+    /// </summary>
+    public MealPlanStatus Status { get; set; } = MealPlanStatus.Draft;
+
+    /// <summary>
     /// Navigation property to meal plan entries.
     /// </summary>
     public ICollection<MealPlanEntry> Entries { get; set; } = new List<MealPlanEntry>();

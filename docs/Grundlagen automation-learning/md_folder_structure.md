@@ -74,54 +74,95 @@ Die Nummerierung ist **Pflicht** und spiegelt die logische Pipeline wider.
 
 ---
 
-### `03_sessions/` – Rohdaten / Arbeit
+### `sessions/` – Rohdaten / Arbeit
 
 **Inhalt:**
-- `session_*.md`
+- `session_YYYY-MM-DD_thema.md`
 
 **Regeln:**
 - konkret
 - zeitlich oder taskbezogen
 - keine Bewertung
+- Format: `session_YYYY-MM-DD_thema.md`
 
 ---
 
-### `04_analysis/` – Vergleich & Analyse
+### `analysis/` – Vergleich & Analyse
 
 **Inhalt:**
-- `__folder_summary.md`
-- `analysis_*.md`
+- `analysis_YYYY-MM-DD_thema.md`
+- `__folder_summary.md` (im Root)
 
 **Regeln:**
 - vergleichend
 - hypothesen erlaubt
 - keine Schwächen oder Lösungen
+- Format: `analysis_YYYY-MM-DD_thema.md`
 
 ---
 
-### `05_abstraction/` – Dauerhafte Erkenntnisse
+### `schwaechen/` – Wiederkehrende Schwächen
 
 **Inhalt:**
-- `schwaechen.md`
-- `loesungen.md`
-- `regeln.md`
+- `schwaechen_YYYY-MM-DD_thema.md`
 
 **Regeln:**
 - sehr langsam wachsend
 - streng abgeleitet
 - hohe Qualität
+- Format: `schwaechen_YYYY-MM-DD_thema.md`
+- Jede Schwäche als separate Datei
+
+---
+
+### `solutions/` – Konkrete Lösungen
+
+**Inhalt:**
+- `solution_YYYY-MM-DD_thema.md`
+
+**Regeln:**
+- handlungsorientiert
+- überprüfbar
+- direkt mit Schwächen verknüpft
+- Format: `solution_YYYY-MM-DD_thema.md`
+- Jede Lösung als separate Datei
+
+---
+
+### `rules/` – Verbindliche Regeln
+
+**Inhalt:**
+- `rule_YYYY-MM-DD_thema.md`
+
+**Regeln:**
+- dauerhaft
+- handlungsleitend
+- nicht diskussionsoffen
+- Format: `rule_YYYY-MM-DD_thema.md`
+- Jede Regel als separate Datei
 
 ---
 
 ## Erlaubter Informationsfluss
 
 ```text
-03_sessions/
+sessions/session_*.md
    ↓
-04_analysis/
+folder_summary.md
    ↓
-05_abstraction/
+analysis/analysis_*.md
+   ↓
+schwaechen/schwaechen_*.md
+   ↓
+solutions/solution_*.md
+   ↓
+rules/rule_*.md
 ```
+
+**Index-Dateien im Root:**
+- `schwaechen.md` – Index und Strukturdefinition
+- `loesungen.md` – Index und Strukturdefinition
+- `regeln.md` – Index und Strukturdefinition
 
 Rücksprünge sind **nicht erlaubt**.
 

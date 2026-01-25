@@ -115,7 +115,7 @@ Nach jeder Session beantwortet Cursor explizit:
 3. Welche Information kam zu spät?
 4. Was hätte man systemisch besser machen können?
 
-Diese Antworten fließen **nicht direkt** in `schwaechen.md`.
+Diese Antworten fließen **nicht direkt** in `schwaechen/` Dateien.
 
 ---
 

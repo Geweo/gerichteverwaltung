@@ -2,9 +2,9 @@
 
 ## Zweck
 
-Dieses Dokument sammelt **konkrete, umsetzbare Lösungen**, die **direkt aus den in `schwaechen.md` beschriebenen Schwächen** abgeleitet werden.
+Dieses Dokument ist ein **Index** für alle dokumentierten Lösungen.
 
-Es enthält **keine neuen Schwächen** und **keine Beobachtungen** aus Sessions.
+Die einzelnen Lösungen befinden sich im Ordner `solutions/` im Format `solution_YYYY-MM-DD_thema.md`.
 
 ---
 
@@ -12,7 +12,7 @@ Es enthält **keine neuen Schwächen** und **keine Beobachtungen** aus Sessions.
 
 - Jede Lösung referenziert **genau eine Schwäche**
 - Lösungen sind **konkret, überprüfbar und umsetzbar**
-- Lösungen werden **nicht aus Sessions**, sondern aus `schwaechen.md` abgeleitet
+- Lösungen werden **nicht aus Sessions**, sondern aus `schwaechen/` abgeleitet
 - Eine Schwäche kann mehrere Lösungen haben
 
 ---
@@ -24,7 +24,7 @@ Jede Lösung wird nach folgendem Schema dokumentiert:
 ```md
 ### <Titel der Lösung>
 
-**Bezieht sich auf Schwäche:** <exakter Titel aus schwaechen.md>
+**Bezieht sich auf Schwäche:** <exakter Titel aus schwaechen/>
 
 **Ziel**  
 Was soll sich durch diese Lösung konkret verbessern?
@@ -44,60 +44,13 @@ Woran erkennt man objektiv, dass die Lösung wirkt?
 
 ## Aktive Lösungen
 
-### Explizite Zieldefinition erzwingen
+Siehe: `solutions/` Ordner
 
-**Bezieht sich auf Schwäche:** Implizite Zieldefinition
-
-**Ziel**  
-Sicherstellen, dass Ziele, Nicht-Ziele und Constraints vor jeder relevanten Arbeit klar formuliert sind.
-
-| Aspekt | Aktueller Zustand | Zielzustand | Lösung | Referenz |
-|------|------------------|------------|--------|----------|
-| Zielklarheit | implizit | explizit | Verpflichtende Zielsektion in jeder Session | md-system-regeln.md |
-
-**Erfolgskriterium**  
-Neue Sessions enthalten explizite Ziel- und Nicht-Ziel-Sektionen.
-
-**Status**  
-- aktiv
-
----
-
-### Trennung der Ebenen erzwingen
-
-**Bezieht sich auf Schwäche:** Vermischung von Ebenen
-
-**Ziel**  
-Verhindern, dass Beobachtung, Analyse und Abstraktion vermischt werden.
-
-| Aspekt | Aktueller Zustand | Zielzustand | Lösung | Referenz |
-|------|------------------|------------|--------|----------|
-| Ebenentrennung | unscharf | klar getrennt | Strikte MD-Typen + Gates | md-architecture-overview.md |
-
-**Erfolgskriterium**  
-Schwächen tauchen nicht mehr direkt in Sessions auf.
-
-**Status**  
-- aktiv
-
----
-
-### Struktur früh externalisieren
-
-**Bezieht sich auf Schwäche:** Spätes Externalisieren von Struktur
-
-**Ziel**  
-Gedankliche Modelle früh sichtbar und teilbar machen.
-
-| Aspekt | Aktueller Zustand | Zielzustand | Lösung | Referenz |
-|------|------------------|------------|--------|----------|
-| Struktur | mental | dokumentiert | Frühes Anlegen von MD-Grundstrukturen | md-system-regeln.md |
-
-**Erfolgskriterium**  
-Neue Themen starten mit einer leeren Struktur-MD.
-
-**Status**  
-- aktiv
+- [[solution_2026-01-24_explizite-zieldefinition-erzwingen]]
+- [[solution_2026-01-24_trennung-der-ebenen-erzwingen]]
+- [[solution_2026-01-24_struktur-frueh-externalisieren]]
+- [[solution_2026-01-24_entity-strukturen-vor-implementierung-pruefen]]
+- [[solution_2026-01-24_namespace-aliases-bei-mehrdeutigkeiten]]
 
 ---
 
@@ -109,7 +62,7 @@ Neue Themen starten mit einer leeren Struktur-MD.
 
 ## Verbindung zu Regeln
 
-- Validierte Lösungen sind **Kandidaten für `regeln.md`**
+- Validierte Lösungen sind **Kandidaten für [[rules/]]**
 - Erst nach Validierung dürfen Lösungen zu Regeln werden
 
 ---
@@ -117,8 +70,9 @@ Neue Themen starten mit einer leeren Struktur-MD.
 ## Rolle dieses Dokuments
 
 Dieses Dokument ist:
+- **Index und Strukturdefinition**
 - handlungsorientiert
 - überprüfbar
 - direkt mit Schwächen verknüpft
 
-Es bildet die **Brücke zwischen Analyse und Steuerung**.
+Es bildet die **Brücke zwischen Analyse und Steuerung** und dient als **Übersicht** über alle Lösungen.

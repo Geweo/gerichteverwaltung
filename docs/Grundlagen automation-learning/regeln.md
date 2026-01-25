@@ -2,15 +2,15 @@
 
 ## Zweck
 
-Dieses Dokument enthält **verbindliche Regeln**, die **ausschließlich aus validierten Lösungen** abgeleitet wurden.
+Dieses Dokument ist ein **Index** für alle dokumentierten Regeln.
 
-Regeln sind **dauerhaft**, **handlungsleitend** und **nicht diskussionsoffen** im Tagesgeschäft.
+Die einzelnen Regeln befinden sich im Ordner `rules/` im Format `rule_YYYY-MM-DD_thema.md`.
 
 ---
 
 ## Grundregeln
 
-- Eine Regel entsteht **nur** aus einer **validierten Lösung** in `loesungen.md`
+- Eine Regel entsteht **nur** aus einer **validierten Lösung** in [[solutions/]]
 - Regeln sind **knapp, eindeutig und überprüfbar**
 - Regeln beschreiben **Verhalten**, nicht Theorie
 - Regeln gelten **systemweit**
@@ -43,64 +43,15 @@ Link zur Lösung / Architektur / Rules
 
 ## Aktive Regeln
 
-### Explizite Zieldefinition ist Pflicht
+Siehe: `rules/` Ordner
 
-**Abgeleitet aus Lösung:** Explizite Zieldefinition erzwingen
-
-**Regel**  
-Jede relevante Arbeit beginnt mit einer expliziten Definition von:
-- Ziel
-- Nicht-Ziel
-- Constraints
-
-**Gilt für**  
-- alle `session_*.md`
-- alle Themen
-
-**Durchsetzung**  
-- Fehlt eine Zieldefinition → STOP und Rückfrage
-
-**Referenz**  
-- `loesungen.md`
-- `md-system-regeln.md`
-
----
-
-### Ebenen dürfen nicht vermischt werden
-
-**Abgeleitet aus Lösung:** Trennung der Ebenen erzwingen
-
-**Regel**  
-Input-, Analyse- und Abstraktionsebenen dürfen nicht in einem Dokument vermischt werden.
-
-**Gilt für**  
-- alle MDs
-
-**Durchsetzung**  
-- Inhalte werden verschoben oder gestoppt
-
-**Referenz**  
-- `md-architecture-overview.md`
-
----
-
-### Struktur wird früh externalisiert
-
-**Abgeleitet aus Lösung:** Struktur früh externalisieren
-
-**Regel**  
-Neue Themen starten immer mit einer leeren Struktur-MD,
-bevor Detailarbeit beginnt.
-
-**Gilt für**  
-- neue Themen
-- neue größere Tasks
-
-**Durchsetzung**  
-- kein Detail ohne Grundstruktur
-
-**Referenz**  
-- `loesungen.md`
+- [[rule_2026-01-24_explizite-zieldefinition-ist-pflicht]]
+- [[rule_2026-01-24_ebenen-duerfen-nicht-vermischt-werden]]
+- [[rule_2026-01-24_struktur-wird-frueh-externalisiert]]
+- [[rule_2026-01-24_top-level-statements-pattern-fuer-tests]]
+- [[rule_2026-01-24_namespace-management-domain-entities-parallelitaet]]
+- [[rule_2026-01-24_package-referenzen-nur-explizit-was-benoeigt-wird]]
+- [[rule_2026-01-24_systematische-build-fehler-analyse]]
 
 ---
 
@@ -122,9 +73,9 @@ bevor Detailarbeit beginnt.
 ## Rolle dieses Dokuments
 
 Dieses Dokument ist:
+- **Index und Strukturdefinition**
 - das **Verhaltensgesetz** des Systems
 - bindend für Mensch und Cursor
 - Grundlage für Qualitätssicherung
 
-Es wird **selten geändert**, aber konsequent angewendet.
-
+Es wird **selten geändert**, aber konsequent angewendet und dient als **Übersicht** über alle Regeln.

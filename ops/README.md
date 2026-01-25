@@ -44,6 +44,24 @@ cd ops/scripts
 ./ensure-localstack-bucket.ps1
 ```
 
+### Datenbank zurücksetzen
+
+Um die Datenbank zu löschen, neu aufzusetzen und Fixtures zu laden:
+```bash
+cd ops/scripts
+./reset-database.sh
+# oder
+./reset-database.ps1
+```
+
+Das Skript:
+1. Löscht die bestehende Datenbank (via EF Core)
+2. Wendet alle Migrations an
+3. Lädt Fixtures (wenn vorhanden)
+
+Optionen:
+- `--skip-fixtures`: Überspringt das Laden von Fixtures
+
 ## Cloud Infrastructure
 
 Das `cloud/` Verzeichnis ist für zukünftige Infrastructure-as-Code (IaC) vorbereitet. Siehe [cloud/README.md](cloud/README.md) für Details.

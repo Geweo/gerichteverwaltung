@@ -86,7 +86,23 @@ if [ "$SKIP_FIXTURES" = false ]; then
         
         # Load fixtures via dotnet run
         cd "$FIXTURES_PROJECT"
-        if dotnet run --no-build 2>/dev/null || dotnet run 2>/dev/null; then
+        # Check if executable exists, otherwise build first
+        EXE_PATH="bin/Debug/net9.0/Ernaehrbar.Fixtures.exe"
+        if [ -f "$EXE_PATH" ]; then
+            if dotnet run --no-build 2>/dev/null; then
+                echo "✅ Fixtures loaded successfully"
+            else
+                echo "⚠️  Failed to load fixtures"
+                exit 1
+            fi
+        else
+            if dotnet run 2>/dev/null; then
+                echo "✅ Fixtures loaded successfully"
+            else
+                echo "⚠️  Failed to load fixtures"
+                exit 1
+            fi
+        fi
             echo "✅ Fixtures loaded successfully"
         else
             echo "⚠️  Failed to load fixtures"

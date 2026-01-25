@@ -1,3 +1,4 @@
+using Ernaehrbar.Adapters.Infrastructure.Data;
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Fixtures.Utilities;
 using Ernaehrbar.Parts.Ports;
@@ -9,7 +10,7 @@ namespace Ernaehrbar.Fixtures.Sets.Development;
 /// </summary>
 public class MealPlanEntryFixture : SeedableFixture<DevelopmentFixtureSet>
 {
-    public async Task AddEntry(MealPlan mealPlan, DateTime date, MealCategory mealCategory, Recipe? recipe, int dayNumber, CancellationToken cancellationToken)
+    public async Task AddEntry(ApplicationDbContext context, MealPlan mealPlan, DateTime date, MealCategory mealCategory, Recipe? recipe, int dayNumber, CancellationToken cancellationToken)
     {
         var entry = new MealPlanEntry
         {
@@ -19,8 +20,8 @@ public class MealPlanEntryFixture : SeedableFixture<DevelopmentFixtureSet>
             RecipeId = recipe?.Id,
             DayNumber = dayNumber
         };
-        await Context.MealPlanEntries.AddAsync(entry, cancellationToken);
-        await Context.SaveChangesAsync(cancellationToken);
+        await context.MealPlanEntries.AddAsync(entry, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     protected override Task SeedAsync(CancellationToken cancellationToken)

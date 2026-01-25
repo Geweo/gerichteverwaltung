@@ -1,3 +1,4 @@
+using Ernaehrbar.Adapters.Infrastructure.Data;
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Fixtures.Utilities;
 
@@ -9,6 +10,7 @@ namespace Ernaehrbar.Fixtures.Sets.Development;
 public class NutritionInfoFixture : SeedableFixture<DevelopmentFixtureSet>
 {
     public async Task AddNutritionInfo(
+        ApplicationDbContext context,
         Recipe recipe,
         decimal? calories = null,
         decimal? protein = null,
@@ -30,8 +32,8 @@ public class NutritionInfoFixture : SeedableFixture<DevelopmentFixtureSet>
             Sugar = sugar,
             Sodium = sodium
         };
-        await Context.NutritionInfos.AddAsync(nutritionInfo, cancellationToken);
-        await Context.SaveChangesAsync(cancellationToken);
+        await context.NutritionInfos.AddAsync(nutritionInfo, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     protected override Task SeedAsync(CancellationToken cancellationToken)

@@ -52,9 +52,9 @@ public class RecipeDraftFixture : SeedableFixture<DevelopmentFixtureSet>
 
         // Add ingredients to drafts
         var draftIngredients = Parent.RecipeDraftIngredientFixture;
-        await draftIngredients.AddIngredient(PendingDraft, "Lasagneplatten", 12, "Stück", 1, cancellationToken);
-        await draftIngredients.AddIngredient(PendingDraft, "Hackfleisch", 500, "g", 2, cancellationToken);
-        await draftIngredients.AddIngredient(ApprovedDraft, "Spaghetti", 400, "g", 1, cancellationToken);
-        await draftIngredients.AddIngredient(ApprovedDraft, "Speck", 200, "g", 2, cancellationToken);
+        await draftIngredients.AddIngredient(Context, PendingDraft, "Lasagneplatten", 12, "Stück", 1, cancellationToken);
+        await draftIngredients.AddIngredient(Context, PendingDraft, "Hackfleisch", 500, "g", 2, cancellationToken);
+        await draftIngredients.AddIngredient(Context, ApprovedDraft, "Spaghetti", 400, "g", 1, cancellationToken);
+        await draftIngredients.AddIngredient(Context, ApprovedDraft, "Speck", 200, "g", 2, cancellationToken);
     }
 }

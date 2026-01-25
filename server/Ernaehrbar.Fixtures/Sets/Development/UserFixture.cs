@@ -1,5 +1,6 @@
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Fixtures.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ernaehrbar.Fixtures.Sets.Development;
 
@@ -18,54 +19,75 @@ public class UserFixture : SeedableFixture<DevelopmentFixtureSet>
     {
         var groups = Parent.GroupFixture;
 
-        MaxMueller = new User
+        // Prüfe ob User bereits existiert, wenn ja, lade ihn
+        MaxMueller = await Context.Users.FirstOrDefaultAsync(u => u.SupabaseUserId == "00000000-0000-0000-0000-000000000001", cancellationToken);
+        if (MaxMueller == null)
         {
-            SupabaseUserId = "00000000-0000-0000-0000-000000000001",
-            Email = "max.mueller@example.com",
-            DisplayName = "Max Müller"
-        };
-        await Context.Users.AddAsync(MaxMueller, cancellationToken);
+            MaxMueller = new User
+            {
+                SupabaseUserId = "00000000-0000-0000-0000-000000000001",
+                Email = "max.mueller@example.com",
+                DisplayName = "Max Müller"
+            };
+            await Context.Users.AddAsync(MaxMueller, cancellationToken);
+        }
 
-        AnnaMueller = new User
+        AnnaMueller = await Context.Users.FirstOrDefaultAsync(u => u.SupabaseUserId == "00000000-0000-0000-0000-000000000002", cancellationToken);
+        if (AnnaMueller == null)
         {
-            SupabaseUserId = "00000000-0000-0000-0000-000000000002",
-            Email = "anna.mueller@example.com",
-            DisplayName = "Anna Müller"
-        };
-        await Context.Users.AddAsync(AnnaMueller, cancellationToken);
+            AnnaMueller = new User
+            {
+                SupabaseUserId = "00000000-0000-0000-0000-000000000002",
+                Email = "anna.mueller@example.com",
+                DisplayName = "Anna Müller"
+            };
+            await Context.Users.AddAsync(AnnaMueller, cancellationToken);
+        }
 
-        TomBerlin = new User
+        TomBerlin = await Context.Users.FirstOrDefaultAsync(u => u.SupabaseUserId == "00000000-0000-0000-0000-000000000003", cancellationToken);
+        if (TomBerlin == null)
         {
-            SupabaseUserId = "00000000-0000-0000-0000-000000000003",
-            Email = "tom.berlin@example.com",
-            DisplayName = "Tom Berlin"
-        };
-        await Context.Users.AddAsync(TomBerlin, cancellationToken);
+            TomBerlin = new User
+            {
+                SupabaseUserId = "00000000-0000-0000-0000-000000000003",
+                Email = "tom.berlin@example.com",
+                DisplayName = "Tom Berlin"
+            };
+            await Context.Users.AddAsync(TomBerlin, cancellationToken);
+        }
 
-        LisaBerlin = new User
+        LisaBerlin = await Context.Users.FirstOrDefaultAsync(u => u.SupabaseUserId == "00000000-0000-0000-0000-000000000004", cancellationToken);
+        if (LisaBerlin == null)
         {
-            SupabaseUserId = "00000000-0000-0000-0000-000000000004",
-            Email = "lisa.berlin@example.com",
-            DisplayName = "Lisa Berlin"
-        };
-        await Context.Users.AddAsync(LisaBerlin, cancellationToken);
+            LisaBerlin = new User
+            {
+                SupabaseUserId = "00000000-0000-0000-0000-000000000004",
+                Email = "lisa.berlin@example.com",
+                DisplayName = "Lisa Berlin"
+            };
+            await Context.Users.AddAsync(LisaBerlin, cancellationToken);
+        }
 
-        SingleUser = new User
+        SingleUser = await Context.Users.FirstOrDefaultAsync(u => u.SupabaseUserId == "00000000-0000-0000-0000-000000000005", cancellationToken);
+        if (SingleUser == null)
         {
-            SupabaseUserId = "00000000-0000-0000-0000-000000000005",
-            Email = "single.user@example.com",
-            DisplayName = "Single User"
-        };
-        await Context.Users.AddAsync(SingleUser, cancellationToken);
+            SingleUser = new User
+            {
+                SupabaseUserId = "00000000-0000-0000-0000-000000000005",
+                Email = "single.user@example.com",
+                DisplayName = "Single User"
+            };
+            await Context.Users.AddAsync(SingleUser, cancellationToken);
+        }
 
         await Context.SaveChangesAsync(cancellationToken);
 
         // Add users to groups
         var groupMembers = Parent.GroupMemberFixture;
-        await groupMembers.AddUserToGroup(MaxMueller, groups.FamilieMueller, GroupRole.Admin, cancellationToken);
-        await groupMembers.AddUserToGroup(AnnaMueller, groups.FamilieMueller, GroupRole.Member, cancellationToken);
-        await groupMembers.AddUserToGroup(TomBerlin, groups.WGBerlin, GroupRole.Admin, cancellationToken);
-        await groupMembers.AddUserToGroup(LisaBerlin, groups.WGBerlin, GroupRole.Member, cancellationToken);
-        await groupMembers.AddUserToGroup(SingleUser, groups.SingleUser, GroupRole.Admin, cancellationToken);
+        await groupMembers.AddUserToGroup(Context, MaxMueller, groups.FamilieMueller, GroupRole.Admin, cancellationToken);
+        await groupMembers.AddUserToGroup(Context, AnnaMueller, groups.FamilieMueller, GroupRole.Member, cancellationToken);
+        await groupMembers.AddUserToGroup(Context, TomBerlin, groups.WGBerlin, GroupRole.Admin, cancellationToken);
+        await groupMembers.AddUserToGroup(Context, LisaBerlin, groups.WGBerlin, GroupRole.Member, cancellationToken);
+        await groupMembers.AddUserToGroup(Context, SingleUser, groups.SingleUser, GroupRole.Admin, cancellationToken);
     }
 }

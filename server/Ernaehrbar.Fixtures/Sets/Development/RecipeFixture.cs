@@ -68,31 +68,31 @@ public class RecipeFixture : SeedableFixture<DevelopmentFixtureSet>
 
         // Add ingredients
         var recipeIngredients = Parent.RecipeIngredientFixture;
-        await recipeIngredients.AddIngredient(SpaghettiBolognese, "Spaghetti", 400, "g", 1, cancellationToken);
-        await recipeIngredients.AddIngredient(SpaghettiBolognese, "Hackfleisch", 500, "g", 2, cancellationToken);
-        await recipeIngredients.AddIngredient(SpaghettiBolognese, "Zwiebeln", 2, "Stück", 3, cancellationToken);
-        await recipeIngredients.AddIngredient(SpaghettiBolognese, "Tomaten", 400, "g", 4, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, SpaghettiBolognese, "Spaghetti", 400, "g", 1, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, SpaghettiBolognese, "Hackfleisch", 500, "g", 2, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, SpaghettiBolognese, "Zwiebeln", 2, "Stück", 3, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, SpaghettiBolognese, "Tomaten", 400, "g", 4, cancellationToken);
 
-        await recipeIngredients.AddIngredient(CaesarSalad, "Romana-Salat", 1, "Kopf", 1, cancellationToken);
-        await recipeIngredients.AddIngredient(CaesarSalad, "Parmesan", 50, "g", 2, cancellationToken);
-        await recipeIngredients.AddIngredient(CaesarSalad, "Croutons", 100, "g", 3, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, CaesarSalad, "Romana-Salat", 1, "Kopf", 1, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, CaesarSalad, "Parmesan", 50, "g", 2, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, CaesarSalad, "Croutons", 100, "g", 3, cancellationToken);
 
-        await recipeIngredients.AddIngredient(Pancakes, "Mehl", 200, "g", 1, cancellationToken);
-        await recipeIngredients.AddIngredient(Pancakes, "Eier", 2, "Stück", 2, cancellationToken);
-        await recipeIngredients.AddIngredient(Pancakes, "Milch", 250, "ml", 3, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, Pancakes, "Mehl", 200, "g", 1, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, Pancakes, "Eier", 2, "Stück", 2, cancellationToken);
+        await recipeIngredients.AddIngredient(Context, Pancakes, "Milch", 250, "ml", 3, cancellationToken);
 
         // Add tags
         var recipeTags = Parent.RecipeTagFixture;
-        await recipeTags.AddTag(SpaghettiBolognese, tags.Schnell, cancellationToken);
-        await recipeTags.AddTag(CaesarSalad, tags.Vegetarisch, cancellationToken);
-        await recipeTags.AddTag(CaesarSalad, tags.Schnell, cancellationToken);
-        await recipeTags.AddTag(Pancakes, tags.Vegetarisch, cancellationToken);
-        await recipeTags.AddTag(Pancakes, tags.Einfach, cancellationToken);
+        await recipeTags.AddTag(Context, SpaghettiBolognese, tags.Schnell, cancellationToken);
+        await recipeTags.AddTag(Context, CaesarSalad, tags.Vegetarisch, cancellationToken);
+        await recipeTags.AddTag(Context, CaesarSalad, tags.Schnell, cancellationToken);
+        await recipeTags.AddTag(Context, Pancakes, tags.Vegetarisch, cancellationToken);
+        await recipeTags.AddTag(Context, Pancakes, tags.Einfach, cancellationToken);
 
         // Add nutrition info
         var nutritionInfo = Parent.NutritionInfoFixture;
-        await nutritionInfo.AddNutritionInfo(SpaghettiBolognese, 450, 25, 55, 12, 5, 8, 800, cancellationToken);
-        await nutritionInfo.AddNutritionInfo(CaesarSalad, 200, 8, 15, 10, 3, 2, 400, cancellationToken);
-        await nutritionInfo.AddNutritionInfo(Pancakes, 250, 8, 35, 8, 1, 10, 300, cancellationToken);
+        await nutritionInfo.AddNutritionInfo(Context, SpaghettiBolognese, 450, 25, 55, 12, 5, 8, 800, cancellationToken);
+        await nutritionInfo.AddNutritionInfo(Context, CaesarSalad, 200, 8, 15, 10, 3, 2, 400, cancellationToken);
+        await nutritionInfo.AddNutritionInfo(Context, Pancakes, 250, 8, 35, 8, 1, 10, 300, cancellationToken);
     }
 }

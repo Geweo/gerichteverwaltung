@@ -1,3 +1,4 @@
+using Ernaehrbar.Adapters.Infrastructure.Data;
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Fixtures.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ namespace Ernaehrbar.Fixtures.Sets.Development;
 /// </summary>
 public class ShoppingListItemFixture : SeedableFixture<DevelopmentFixtureSet>
 {
-    public async Task AddItem(ShoppingList shoppingList, RecipeIngredient? recipeIngredient, CancellationToken cancellationToken)
+    public async Task AddItem(ApplicationDbContext context, ShoppingList shoppingList, RecipeIngredient? recipeIngredient, CancellationToken cancellationToken)
     {
         var item = new ShoppingListItem
         {
@@ -21,8 +22,8 @@ public class ShoppingListItemFixture : SeedableFixture<DevelopmentFixtureSet>
             RecipeIngredientId = recipeIngredient?.Id,
             Order = 1
         };
-        await Context.ShoppingListItems.AddAsync(item, cancellationToken);
-        await Context.SaveChangesAsync(cancellationToken);
+        await context.ShoppingListItems.AddAsync(item, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     protected override Task SeedAsync(CancellationToken cancellationToken)

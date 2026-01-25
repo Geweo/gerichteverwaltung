@@ -74,15 +74,23 @@ try {
             # Load fixtures via dotnet run
             Push-Location $FIXTURES_PROJECT
             try {
-                dotnet run --no-build 2>$null
-                if ($LASTEXITCODE -eq 0) {
-                    Write-Host "✅ Fixtures loaded successfully" -ForegroundColor Green
+                # Try with --no-build first, but if it fails, build and run
+                $exePath = Join-Path (Join-Path (Join-Path "bin" "Debug") "net9.0") "Ernaehrbar.Fixtures.exe"
+                if (Test-Path $exePath) {
+                    dotnet run --no-build 2>$null
+                    if ($LASTEXITCODE -eq 0) {
+                        Write-Host "✅ Fixtures loaded successfully" -ForegroundColor Green
+                    } else {
+                        Write-Host "⚠️  Failed to load fixtures (exit code: $LASTEXITCODE)" -ForegroundColor Red
+                        exit 1
+                    }
                 } else {
+                    # Build and run if executable doesn't exist
                     dotnet run 2>$null
                     if ($LASTEXITCODE -eq 0) {
                         Write-Host "✅ Fixtures loaded successfully" -ForegroundColor Green
                     } else {
-                        Write-Host "⚠️  Failed to load fixtures" -ForegroundColor Red
+                        Write-Host "⚠️  Failed to load fixtures (exit code: $LASTEXITCODE)" -ForegroundColor Red
                         exit 1
                     }
                 }

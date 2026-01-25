@@ -84,6 +84,9 @@ Es ist das **Meta-Dokument** zur Orientierung und Priorisierung.
 
 ## Nächste empfohlene Schritte
 
+**Für Implementierung:** Siehe [[project_status]] für aktuelle Tasks und Prioritäten
+
+**Für Wissenssystem:**
 1. Mindestens 2–3 reale Sessions zu konkreten Themen durchführen
 2. `__folder_summary.md` erneut prüfen
 3. Schwächen ggf. aktualisieren

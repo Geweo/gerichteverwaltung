@@ -17,7 +17,9 @@ public class ShoppingListFixture : SeedableFixture<DevelopmentFixtureSet>
         var users = Parent.UserFixture;
         var recipes = Parent.RecipeFixture;
 
-        var startDate = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + 1); // Monday
+        // PostgreSQL requires UTC DateTime, not Local
+        var today = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc);
+        var startDate = today.AddDays(-(int)today.DayOfWeek + 1); // Monday
         var endDate = startDate.AddDays(6); // Sunday
 
         CurrentWeekShoppingList = new ShoppingList
@@ -40,10 +42,10 @@ public class ShoppingListFixture : SeedableFixture<DevelopmentFixtureSet>
 
         if (ingredients.Count > 0)
         {
-            await shoppingListItems.AddItem(CurrentWeekShoppingList, ingredients[0], cancellationToken);
+            await shoppingListItems.AddItem(Context, CurrentWeekShoppingList, ingredients[0], cancellationToken);
             if (ingredients.Count > 1)
             {
-                await shoppingListItems.AddItem(CurrentWeekShoppingList, ingredients[1], cancellationToken);
+                await shoppingListItems.AddItem(Context, CurrentWeekShoppingList, ingredients[1], cancellationToken);
             }
         }
     }

@@ -1,3 +1,4 @@
+using Ernaehrbar.Adapters.Infrastructure.Data;
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Fixtures.Utilities;
 
@@ -8,7 +9,7 @@ namespace Ernaehrbar.Fixtures.Sets.Development;
 /// </summary>
 public class RecipeIngredientFixture : SeedableFixture<DevelopmentFixtureSet>
 {
-    public async Task AddIngredient(Recipe recipe, string name, decimal? quantity, string? unit, int order, CancellationToken cancellationToken)
+    public async Task AddIngredient(ApplicationDbContext context, Recipe recipe, string name, decimal? quantity, string? unit, int order, CancellationToken cancellationToken)
     {
         var ingredient = new RecipeIngredient
         {
@@ -18,8 +19,8 @@ public class RecipeIngredientFixture : SeedableFixture<DevelopmentFixtureSet>
             Unit = unit,
             Order = order
         };
-        await Context.RecipeIngredients.AddAsync(ingredient, cancellationToken);
-        await Context.SaveChangesAsync(cancellationToken);
+        await context.RecipeIngredients.AddAsync(ingredient, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     protected override Task SeedAsync(CancellationToken cancellationToken)

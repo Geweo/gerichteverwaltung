@@ -1,5 +1,6 @@
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Fixtures.Utilities;
+using Ernaehrbar.Parts.Domain;
 using Ernaehrbar.Parts.Ports;
 using Entities = Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 
@@ -25,10 +26,10 @@ public class RecipeDraftFixture : SeedableFixture<DevelopmentFixtureSet>
             Name = "Lasagne",
             Description = "Italienische Lasagne mit Hackfleisch",
             Instructions = "1. Hackfleisch anbraten\n2. Bechamelsauce zubereiten\n3. Schichten\n4. Im Ofen backen",
-            Source = Entities.RecipeSource.Generated,
+            Source = RecipeSource.Generated,
             MealCategory = MealCategory.Dinner,
             CreatedByUserId = users.MaxMueller.Id,
-            Status = Entities.DraftStatus.Pending
+            Status = DraftStatus.Pending
         };
         await Context.RecipeDrafts.AddAsync(PendingDraft, cancellationToken);
 
@@ -39,12 +40,12 @@ public class RecipeDraftFixture : SeedableFixture<DevelopmentFixtureSet>
             Name = "Pasta Carbonara",
             Description = "Klassische Carbonara",
             Instructions = "1. Nudeln kochen\n2. Speck anbraten\n3. Eier und Parmesan vermischen\n4. Alles vermengen",
-            Source = Entities.RecipeSource.Manual,
+            Source = RecipeSource.Manual,
             MealCategory = MealCategory.Dinner,
             CreatedByUserId = users.TomBerlin.Id,
             ReviewedByUserId = users.LisaBerlin.Id,
             ReviewedAt = DateTime.UtcNow,
-            Status = Entities.DraftStatus.Approved
+            Status = DraftStatus.Approved
         };
         await Context.RecipeDrafts.AddAsync(ApprovedDraft, cancellationToken);
 

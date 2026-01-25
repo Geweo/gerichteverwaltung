@@ -5,9 +5,9 @@ using MediatR;
 namespace Ernaehrbar.Parts.Queries.Handlers;
 
 /// <summary>
-/// Handler für GetRecipesQuery: ruft eine Liste von Rezepten ab.
+/// Handler für GetRecipesQuery: ruft eine paginierte Liste von Rezepten ab.
 /// </summary>
-public class GetRecipesQueryHandler : IRequestHandler<GetRecipesQuery, List<ReadModels.RecipeReadModel>>
+public class GetRecipesQueryHandler : IRequestHandler<GetRecipesQuery, Queries.Common.PaginatedResult<ReadModels.RecipeReadModel>>
 {
     private readonly IRecipeReadRepository _readRepository;
 
@@ -17,14 +17,19 @@ public class GetRecipesQueryHandler : IRequestHandler<GetRecipesQuery, List<Read
     }
 
     /// <inheritdoc />
-    public Task<List<ReadModels.RecipeReadModel>> Handle(GetRecipesQuery request, CancellationToken cancellationToken)
+    public Task<Queries.Common.PaginatedResult<ReadModels.RecipeReadModel>> Handle(GetRecipesQuery request, CancellationToken cancellationToken)
     {
         return _readRepository.GetRecipesAsync(
             request.GroupId,
-            request.TagIds,
+            request.Page,
+            request.PageSize,
             request.SearchTerm,
-            request.Skip,
-            request.Take,
+            request.MealCategory,
+            request.Source,
+            request.Favorites,
+            request.TagIds,
+            request.SortBy,
+            request.SortDirection,
             cancellationToken);
     }
 }

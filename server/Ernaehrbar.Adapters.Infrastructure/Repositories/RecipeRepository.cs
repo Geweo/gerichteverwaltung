@@ -3,8 +3,6 @@ using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Parts.Domain;
 using Ernaehrbar.Parts.Ports;
 using Microsoft.EntityFrameworkCore;
-using DomainRecipeSource = Ernaehrbar.Parts.Domain.RecipeSource;
-using InfrastructureRecipeSource = Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeSource;
 
 namespace Ernaehrbar.Adapters.Infrastructure.Repositories;
 
@@ -26,7 +24,7 @@ public class RecipeRepository : IRecipeRepository
         {
             GroupId = recipe.GroupId,
             Name = recipe.Name,
-            Source = MapRecipeSourceToInfrastructure(recipe.Source),
+            Source = recipe.Source,
             Description = recipe.Description,
             Instructions = recipe.Instructions,
             MealCategory = recipe.MealCategory,
@@ -74,7 +72,7 @@ public class RecipeRepository : IRecipeRepository
         }
 
         entity.Name = recipe.Name;
-        entity.Source = MapRecipeSourceToInfrastructure(recipe.Source);
+        entity.Source = recipe.Source;
         entity.Description = recipe.Description;
         entity.Instructions = recipe.Instructions;
         entity.MealCategory = recipe.MealCategory;
@@ -113,14 +111,4 @@ public class RecipeRepository : IRecipeRepository
         }
     }
 
-    private static InfrastructureRecipeSource MapRecipeSourceToInfrastructure(DomainRecipeSource source)
-    {
-        return source switch
-        {
-            DomainRecipeSource.Generated => InfrastructureRecipeSource.Generated,
-            DomainRecipeSource.Upload => InfrastructureRecipeSource.Upload,
-            DomainRecipeSource.Manual => InfrastructureRecipeSource.Manual,
-            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
-        };
-    }
 }

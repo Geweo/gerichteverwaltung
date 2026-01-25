@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Ernaehrbar.Adapters.Infrastructure.Data;
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
+using Ernaehrbar.Parts.Domain;
 using Ernaehrbar.Tests.Integration.TestHelpers;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
@@ -61,7 +62,7 @@ public class RecipeDraftsControllerTests(
 
         draft.ShouldNotBeNull();
         draft.Name.ShouldBe("Test Recipe Draft");
-        draft.Source.ShouldBe(Entities.RecipeSource.Generated);
+        draft.Source.ShouldBe(RecipeSource.Generated);
         draft.Ingredients.Count.ShouldBe(2);
     }
 
@@ -116,7 +117,7 @@ public class RecipeDraftsControllerTests(
         // Verify draft is approved
         var updatedDraft = await DbContext.RecipeDrafts.FindAsync(draft.Id);
         updatedDraft.ShouldNotBeNull();
-        updatedDraft.Status.ShouldBe(Entities.DraftStatus.Approved);
+        updatedDraft.Status.ShouldBe(DraftStatus.Approved);
         updatedDraft.ReviewedByUserId.ShouldBe(user.Id);
 
         // Verify recipe was created

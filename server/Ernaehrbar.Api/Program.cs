@@ -168,6 +168,10 @@ else
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Security Middleware: Automatically creates users from Supabase authentication (like zentreo)
+app.UseMiddleware<Ernaehrbar.Adapters.Api.Middleware.SecurityMiddleware>();
+
 app.MapControllers();
 
 // Log startup information

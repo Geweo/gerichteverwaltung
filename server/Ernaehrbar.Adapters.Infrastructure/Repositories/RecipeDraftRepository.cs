@@ -3,10 +3,6 @@ using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Parts.Domain;
 using Ernaehrbar.Parts.Ports;
 using Microsoft.EntityFrameworkCore;
-using DomainRecipeSource = Ernaehrbar.Parts.Domain.RecipeSource;
-using DomainDraftStatus = Ernaehrbar.Parts.Domain.DraftStatus;
-using InfrastructureRecipeSource = Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeSource;
-using InfrastructureDraftStatus = Ernaehrbar.Adapters.Infrastructure.Data.Entities.DraftStatus;
 
 namespace Ernaehrbar.Adapters.Infrastructure.Repositories;
 
@@ -29,8 +25,8 @@ public class RecipeDraftRepository : IRecipeDraftRepository
             GroupId = draft.GroupId,
             CreatedByUserId = draft.CreatedByUserId,
             Name = draft.Name,
-            Source = MapRecipeSourceToInfrastructure(draft.Source),
-            Status = MapDraftStatusToInfrastructure(draft.Status),
+            Source = draft.Source,
+            Status = draft.Status,
             Description = draft.Description,
             Instructions = draft.Instructions,
             MealCategory = draft.MealCategory,
@@ -91,8 +87,8 @@ public class RecipeDraftRepository : IRecipeDraftRepository
         }
 
         entity.Name = draft.Name;
-        entity.Source = MapRecipeSourceToInfrastructure(draft.Source);
-        entity.Status = MapDraftStatusToInfrastructure(draft.Status);
+        entity.Source = draft.Source;
+        entity.Status = draft.Status;
         entity.Description = draft.Description;
         entity.Instructions = draft.Instructions;
         entity.MealCategory = draft.MealCategory;
@@ -137,8 +133,8 @@ public class RecipeDraftRepository : IRecipeDraftRepository
             GroupId: entity.GroupId,
             CreatedByUserId: entity.CreatedByUserId,
             Name: entity.Name,
-            Source: MapRecipeSourceToDomain(entity.Source),
-            Status: MapDraftStatusToDomain(entity.Status),
+            Source: entity.Source,
+            Status: entity.Status,
             Description: entity.Description,
             Instructions: entity.Instructions,
             MealCategory: entity.MealCategory,
@@ -156,47 +152,4 @@ public class RecipeDraftRepository : IRecipeDraftRepository
         );
     }
 
-    private static DomainRecipeSource MapRecipeSourceToDomain(InfrastructureRecipeSource source)
-    {
-        return source switch
-        {
-            InfrastructureRecipeSource.Generated => DomainRecipeSource.Generated,
-            InfrastructureRecipeSource.Upload => DomainRecipeSource.Upload,
-            InfrastructureRecipeSource.Manual => DomainRecipeSource.Manual,
-            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
-        };
-    }
-
-    private static InfrastructureRecipeSource MapRecipeSourceToInfrastructure(DomainRecipeSource source)
-    {
-        return source switch
-        {
-            DomainRecipeSource.Generated => InfrastructureRecipeSource.Generated,
-            DomainRecipeSource.Upload => InfrastructureRecipeSource.Upload,
-            DomainRecipeSource.Manual => InfrastructureRecipeSource.Manual,
-            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
-        };
-    }
-
-    private static DomainDraftStatus MapDraftStatusToDomain(InfrastructureDraftStatus status)
-    {
-        return status switch
-        {
-            InfrastructureDraftStatus.Pending => DomainDraftStatus.Pending,
-            InfrastructureDraftStatus.Approved => DomainDraftStatus.Approved,
-            InfrastructureDraftStatus.Rejected => DomainDraftStatus.Rejected,
-            _ => throw new ArgumentOutOfRangeException(nameof(status), status, null)
-        };
-    }
-
-    private static InfrastructureDraftStatus MapDraftStatusToInfrastructure(DomainDraftStatus status)
-    {
-        return status switch
-        {
-            DomainDraftStatus.Pending => InfrastructureDraftStatus.Pending,
-            DomainDraftStatus.Approved => InfrastructureDraftStatus.Approved,
-            DomainDraftStatus.Rejected => InfrastructureDraftStatus.Rejected,
-            _ => throw new ArgumentOutOfRangeException(nameof(status), status, null)
-        };
-    }
 }

@@ -9,27 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as AnonRouteRouteImport } from './routes/_anon/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedShoppingListRouteImport } from './routes/_authenticated/shopping-list'
-import { Route as AuthenticatedRecipesRouteImport } from './routes/_authenticated/recipes'
-import { Route as AuthenticatedMealPlanRouteImport } from './routes/_authenticated/meal-plan'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AppShoppingListRouteRouteImport } from './routes/_app/shopping-list/route'
+import { Route as AppRecipesRouteRouteImport } from './routes/_app/recipes/route'
+import { Route as AppMealPlanRouteRouteImport } from './routes/_app/meal-plan/route'
+import { Route as AppDashboardRouteRouteImport } from './routes/_app/dashboard/route'
+import { Route as AnonRegisterRouteRouteImport } from './routes/_anon/register/route'
+import { Route as AnonLoginRouteRouteImport } from './routes/_anon/login/route'
+import { Route as AppShoppingListIndexRouteImport } from './routes/_app/shopping-list/index'
+import { Route as AppRecipesIndexRouteImport } from './routes/_app/recipes/index'
+import { Route as AppMealPlanIndexRouteImport } from './routes/_app/meal-plan/index'
+import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
+import { Route as AnonRegisterIndexRouteImport } from './routes/_anon/register/index'
+import { Route as AnonLoginIndexRouteImport } from './routes/_anon/login/index'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
+const AnonRouteRoute = AnonRouteRouteImport.update({
+  id: '/_anon',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,56 +38,108 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedShoppingListRoute =
-  AuthenticatedShoppingListRouteImport.update({
-    id: '/shopping-list',
-    path: '/shopping-list',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedRecipesRoute = AuthenticatedRecipesRouteImport.update({
+const AppShoppingListRouteRoute = AppShoppingListRouteRouteImport.update({
+  id: '/shopping-list',
+  path: '/shopping-list',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppRecipesRouteRoute = AppRecipesRouteRouteImport.update({
   id: '/recipes',
   path: '/recipes',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const AuthenticatedMealPlanRoute = AuthenticatedMealPlanRouteImport.update({
+const AppMealPlanRouteRoute = AppMealPlanRouteRouteImport.update({
   id: '/meal-plan',
   path: '/meal-plan',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+const AppDashboardRouteRoute = AppDashboardRouteRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AnonRegisterRouteRoute = AnonRegisterRouteRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AnonRouteRoute,
+} as any)
+const AnonLoginRouteRoute = AnonLoginRouteRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AnonRouteRoute,
+} as any)
+const AppShoppingListIndexRoute = AppShoppingListIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppShoppingListRouteRoute,
+} as any)
+const AppRecipesIndexRoute = AppRecipesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRecipesRouteRoute,
+} as any)
+const AppMealPlanIndexRoute = AppMealPlanIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppMealPlanRouteRoute,
+} as any)
+const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppDashboardRouteRoute,
+} as any)
+const AnonRegisterIndexRoute = AnonRegisterIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AnonRegisterRouteRoute,
+} as any)
+const AnonLoginIndexRoute = AnonLoginIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AnonLoginRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/meal-plan': typeof AuthenticatedMealPlanRoute
-  '/recipes': typeof AuthenticatedRecipesRoute
-  '/shopping-list': typeof AuthenticatedShoppingListRoute
+  '/login': typeof AnonLoginRouteRouteWithChildren
+  '/register': typeof AnonRegisterRouteRouteWithChildren
+  '/dashboard': typeof AppDashboardRouteRouteWithChildren
+  '/meal-plan': typeof AppMealPlanRouteRouteWithChildren
+  '/recipes': typeof AppRecipesRouteRouteWithChildren
+  '/shopping-list': typeof AppShoppingListRouteRouteWithChildren
+  '/login/': typeof AnonLoginIndexRoute
+  '/register/': typeof AnonRegisterIndexRoute
+  '/dashboard/': typeof AppDashboardIndexRoute
+  '/meal-plan/': typeof AppMealPlanIndexRoute
+  '/recipes/': typeof AppRecipesIndexRoute
+  '/shopping-list/': typeof AppShoppingListIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/meal-plan': typeof AuthenticatedMealPlanRoute
-  '/recipes': typeof AuthenticatedRecipesRoute
-  '/shopping-list': typeof AuthenticatedShoppingListRoute
+  '/login': typeof AnonLoginIndexRoute
+  '/register': typeof AnonRegisterIndexRoute
+  '/dashboard': typeof AppDashboardIndexRoute
+  '/meal-plan': typeof AppMealPlanIndexRoute
+  '/recipes': typeof AppRecipesIndexRoute
+  '/shopping-list': typeof AppShoppingListIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/meal-plan': typeof AuthenticatedMealPlanRoute
-  '/_authenticated/recipes': typeof AuthenticatedRecipesRoute
-  '/_authenticated/shopping-list': typeof AuthenticatedShoppingListRoute
+  '/_anon': typeof AnonRouteRouteWithChildren
+  '/_app': typeof AppRouteRouteWithChildren
+  '/_anon/login': typeof AnonLoginRouteRouteWithChildren
+  '/_anon/register': typeof AnonRegisterRouteRouteWithChildren
+  '/_app/dashboard': typeof AppDashboardRouteRouteWithChildren
+  '/_app/meal-plan': typeof AppMealPlanRouteRouteWithChildren
+  '/_app/recipes': typeof AppRecipesRouteRouteWithChildren
+  '/_app/shopping-list': typeof AppShoppingListRouteRouteWithChildren
+  '/_anon/login/': typeof AnonLoginIndexRoute
+  '/_anon/register/': typeof AnonRegisterIndexRoute
+  '/_app/dashboard/': typeof AppDashboardIndexRoute
+  '/_app/meal-plan/': typeof AppMealPlanIndexRoute
+  '/_app/recipes/': typeof AppRecipesIndexRoute
+  '/_app/shopping-list/': typeof AppShoppingListIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -98,6 +151,12 @@ export interface FileRouteTypes {
     | '/meal-plan'
     | '/recipes'
     | '/shopping-list'
+    | '/login/'
+    | '/register/'
+    | '/dashboard/'
+    | '/meal-plan/'
+    | '/recipes/'
+    | '/shopping-list/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -110,43 +169,42 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_authenticated'
-    | '/login'
-    | '/register'
-    | '/_authenticated/dashboard'
-    | '/_authenticated/meal-plan'
-    | '/_authenticated/recipes'
-    | '/_authenticated/shopping-list'
+    | '/_anon'
+    | '/_app'
+    | '/_anon/login'
+    | '/_anon/register'
+    | '/_app/dashboard'
+    | '/_app/meal-plan'
+    | '/_app/recipes'
+    | '/_app/shopping-list'
+    | '/_anon/login/'
+    | '/_anon/register/'
+    | '/_app/dashboard/'
+    | '/_app/meal-plan/'
+    | '/_app/recipes/'
+    | '/_app/shopping-list/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  LoginRoute: typeof LoginRoute
-  RegisterRoute: typeof RegisterRoute
+  AnonRouteRoute: typeof AnonRouteRouteWithChildren
+  AppRouteRoute: typeof AppRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
+    '/_app': {
+      id: '/_app'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_anon': {
+      id: '/_anon'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AnonRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -156,60 +214,197 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/shopping-list': {
-      id: '/_authenticated/shopping-list'
+    '/_app/shopping-list': {
+      id: '/_app/shopping-list'
       path: '/shopping-list'
       fullPath: '/shopping-list'
-      preLoaderRoute: typeof AuthenticatedShoppingListRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof AppShoppingListRouteRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/_authenticated/recipes': {
-      id: '/_authenticated/recipes'
+    '/_app/recipes': {
+      id: '/_app/recipes'
       path: '/recipes'
       fullPath: '/recipes'
-      preLoaderRoute: typeof AuthenticatedRecipesRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof AppRecipesRouteRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/_authenticated/meal-plan': {
-      id: '/_authenticated/meal-plan'
+    '/_app/meal-plan': {
+      id: '/_app/meal-plan'
       path: '/meal-plan'
       fullPath: '/meal-plan'
-      preLoaderRoute: typeof AuthenticatedMealPlanRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof AppMealPlanRouteRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof AppDashboardRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_anon/register': {
+      id: '/_anon/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AnonRegisterRouteRouteImport
+      parentRoute: typeof AnonRouteRoute
+    }
+    '/_anon/login': {
+      id: '/_anon/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AnonLoginRouteRouteImport
+      parentRoute: typeof AnonRouteRoute
+    }
+    '/_app/shopping-list/': {
+      id: '/_app/shopping-list/'
+      path: '/'
+      fullPath: '/shopping-list/'
+      preLoaderRoute: typeof AppShoppingListIndexRouteImport
+      parentRoute: typeof AppShoppingListRouteRoute
+    }
+    '/_app/recipes/': {
+      id: '/_app/recipes/'
+      path: '/'
+      fullPath: '/recipes/'
+      preLoaderRoute: typeof AppRecipesIndexRouteImport
+      parentRoute: typeof AppRecipesRouteRoute
+    }
+    '/_app/meal-plan/': {
+      id: '/_app/meal-plan/'
+      path: '/'
+      fullPath: '/meal-plan/'
+      preLoaderRoute: typeof AppMealPlanIndexRouteImport
+      parentRoute: typeof AppMealPlanRouteRoute
+    }
+    '/_app/dashboard/': {
+      id: '/_app/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AppDashboardIndexRouteImport
+      parentRoute: typeof AppDashboardRouteRoute
+    }
+    '/_anon/register/': {
+      id: '/_anon/register/'
+      path: '/'
+      fullPath: '/register/'
+      preLoaderRoute: typeof AnonRegisterIndexRouteImport
+      parentRoute: typeof AnonRegisterRouteRoute
+    }
+    '/_anon/login/': {
+      id: '/_anon/login/'
+      path: '/'
+      fullPath: '/login/'
+      preLoaderRoute: typeof AnonLoginIndexRouteImport
+      parentRoute: typeof AnonLoginRouteRoute
     }
   }
 }
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedMealPlanRoute: typeof AuthenticatedMealPlanRoute
-  AuthenticatedRecipesRoute: typeof AuthenticatedRecipesRoute
-  AuthenticatedShoppingListRoute: typeof AuthenticatedShoppingListRoute
+interface AnonLoginRouteRouteChildren {
+  AnonLoginIndexRoute: typeof AnonLoginIndexRoute
 }
 
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedMealPlanRoute: AuthenticatedMealPlanRoute,
-  AuthenticatedRecipesRoute: AuthenticatedRecipesRoute,
-  AuthenticatedShoppingListRoute: AuthenticatedShoppingListRoute,
+const AnonLoginRouteRouteChildren: AnonLoginRouteRouteChildren = {
+  AnonLoginIndexRoute: AnonLoginIndexRoute,
 }
 
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
+const AnonLoginRouteRouteWithChildren = AnonLoginRouteRoute._addFileChildren(
+  AnonLoginRouteRouteChildren,
+)
+
+interface AnonRegisterRouteRouteChildren {
+  AnonRegisterIndexRoute: typeof AnonRegisterIndexRoute
+}
+
+const AnonRegisterRouteRouteChildren: AnonRegisterRouteRouteChildren = {
+  AnonRegisterIndexRoute: AnonRegisterIndexRoute,
+}
+
+const AnonRegisterRouteRouteWithChildren =
+  AnonRegisterRouteRoute._addFileChildren(AnonRegisterRouteRouteChildren)
+
+interface AnonRouteRouteChildren {
+  AnonLoginRouteRoute: typeof AnonLoginRouteRouteWithChildren
+  AnonRegisterRouteRoute: typeof AnonRegisterRouteRouteWithChildren
+}
+
+const AnonRouteRouteChildren: AnonRouteRouteChildren = {
+  AnonLoginRouteRoute: AnonLoginRouteRouteWithChildren,
+  AnonRegisterRouteRoute: AnonRegisterRouteRouteWithChildren,
+}
+
+const AnonRouteRouteWithChildren = AnonRouteRoute._addFileChildren(
+  AnonRouteRouteChildren,
+)
+
+interface AppDashboardRouteRouteChildren {
+  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+}
+
+const AppDashboardRouteRouteChildren: AppDashboardRouteRouteChildren = {
+  AppDashboardIndexRoute: AppDashboardIndexRoute,
+}
+
+const AppDashboardRouteRouteWithChildren =
+  AppDashboardRouteRoute._addFileChildren(AppDashboardRouteRouteChildren)
+
+interface AppMealPlanRouteRouteChildren {
+  AppMealPlanIndexRoute: typeof AppMealPlanIndexRoute
+}
+
+const AppMealPlanRouteRouteChildren: AppMealPlanRouteRouteChildren = {
+  AppMealPlanIndexRoute: AppMealPlanIndexRoute,
+}
+
+const AppMealPlanRouteRouteWithChildren =
+  AppMealPlanRouteRoute._addFileChildren(AppMealPlanRouteRouteChildren)
+
+interface AppRecipesRouteRouteChildren {
+  AppRecipesIndexRoute: typeof AppRecipesIndexRoute
+}
+
+const AppRecipesRouteRouteChildren: AppRecipesRouteRouteChildren = {
+  AppRecipesIndexRoute: AppRecipesIndexRoute,
+}
+
+const AppRecipesRouteRouteWithChildren = AppRecipesRouteRoute._addFileChildren(
+  AppRecipesRouteRouteChildren,
+)
+
+interface AppShoppingListRouteRouteChildren {
+  AppShoppingListIndexRoute: typeof AppShoppingListIndexRoute
+}
+
+const AppShoppingListRouteRouteChildren: AppShoppingListRouteRouteChildren = {
+  AppShoppingListIndexRoute: AppShoppingListIndexRoute,
+}
+
+const AppShoppingListRouteRouteWithChildren =
+  AppShoppingListRouteRoute._addFileChildren(AppShoppingListRouteRouteChildren)
+
+interface AppRouteRouteChildren {
+  AppDashboardRouteRoute: typeof AppDashboardRouteRouteWithChildren
+  AppMealPlanRouteRoute: typeof AppMealPlanRouteRouteWithChildren
+  AppRecipesRouteRoute: typeof AppRecipesRouteRouteWithChildren
+  AppShoppingListRouteRoute: typeof AppShoppingListRouteRouteWithChildren
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppDashboardRouteRoute: AppDashboardRouteRouteWithChildren,
+  AppMealPlanRouteRoute: AppMealPlanRouteRouteWithChildren,
+  AppRecipesRouteRoute: AppRecipesRouteRouteWithChildren,
+  AppShoppingListRouteRoute: AppShoppingListRouteRouteWithChildren,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  LoginRoute: LoginRoute,
-  RegisterRoute: RegisterRoute,
+  AnonRouteRoute: AnonRouteRouteWithChildren,
+  AppRouteRoute: AppRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -48,6 +48,7 @@ public static class ServiceCollectionExtensions
         // Read-Repositories (Read-optimiert)
         services.AddScoped<IRecipeReadRepository, RecipeReadRepository>();
         services.AddScoped<IMealPlanReadRepository, MealPlanReadRepository>();
+        services.AddScoped<IUserReadRepository, ReadRepositories.UserReadRepository>();
 
         // ILLMService: Ollama oder andere Provider je nach Konfiguration
         services.AddSingleton<ILLMService>(sp =>

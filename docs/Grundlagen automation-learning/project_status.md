@@ -11,11 +11,20 @@ Aktueller Stand und nächste Schritte für Ernährbär.
 ## ✅ Abgeschlossen
 
 - Datenbank-Reset-Skripte (PowerShell & Bash)
-- Fixture-System für alle Tabellen
+- Fixture-System für alle Tabellen (19/19 Tabellen)
 - Build-Fehler behoben, Projekt kompiliert
 - Tests angepasst (verwenden Fixtures)
+- **Frontend: Rezept-Datenbank Feature-Modul** (Grundstruktur)
+  - Feature-Modul `src/features/recipes/` erstellt
+  - Komponenten: RecipeDatabase, RecipeTable, RecipeFilters, RecipeCreateDialog, RecipeDetailDialog
+  - Types & Hooks definiert
+  - Route `/recipes` aktualisiert
+  - UI-Komponenten: Badge, Checkbox hinzugefügt
 
-**Sessions:** [[session_2026-01-24_database-reset-fixtures]], [[session_2026-01-24_build-errors-fixes]]
+**Sessions:** 
+- [[session_2026-01-24_database-reset-fixtures]]
+- [[session_2026-01-24_build-errors-fixes]]
+- [[session_2026-01-24_fixture-system-erklaerung]]
 
 ---
 
@@ -26,26 +35,34 @@ Aktueller Stand und nächste Schritte für Ernährbär.
 - [ ] Fixtures prüfen
 - [ ] Ergebnisse dokumentieren
 
-### 2. Frontend starten
-**Basis:** [[../ernaehrbaer/ERNAEHRBAR-Components|Komponenten-Dokumentation]]
+### 2. Frontend (In Arbeit)
 
-**Priorität 1: Core-Komponenten**
-- [ ] Projekt-Setup (Framework wählen: React/Vue/etc.)
-- [ ] Routing & Navigation
-- [ ] API-Client generieren/konfigurieren
-- [ ] Authentication/Authorization
+**✅ Abgeschlossen:**
+- Projekt-Setup (React 19 + TypeScript + TanStack Router + TanStack Query)
+- Routing & Navigation (TanStack Router)
+- Feature-Struktur nach Zentreo-Architektur
+- **Rezept-Datenbank Grundstruktur:**
+  - ✅ Feature-Modul `src/features/recipes/`
+  - ✅ Komponenten-Struktur (RecipeDatabase, RecipeTable, RecipeFilters, etc.)
+  - ✅ TypeScript-Typen definiert
+  - ✅ TanStack Query Hooks vorbereitet
+
+**⏭️ Nächste Schritte für Rezept-Datenbank:**
+- [ ] API-Client generieren (Orval) und konfigurieren
+- [ ] `useRecipes` Hook mit echtem API-Call verbinden
+- [ ] Inline-Editierung in RecipeTable implementieren
+- [ ] Rezept-Bearbeitung (Detail-Dialog erweitern)
+- [ ] Rezept-Löschung implementieren
+- [ ] Tags-Filter erweitern (wenn Tag-API verfügbar)
+- [ ] Upload-Funktion implementieren
+- [ ] KI-Generierung implementieren
 
 **Priorität 2: Dashboard**
 - [ ] Wochenplan-Tabelle (Montag–Sonntag, Morgens/Mittags/Abends)
 - [ ] Filter (Favoriten, Mahlzeit, Tags)
 - [ ] Detailansicht pro Mahlzeit
 
-**Priorität 3: Rezept-Datenbank**
-- [ ] Rezept-Liste/Tabelle
-- [ ] Rezept-Detailansicht
-- [ ] Rezept-Erstellung (Upload & KI)
-
-**Priorität 4: Wochenplan-Verwaltung**
+**Priorität 3: Wochenplan-Verwaltung**
 - [ ] Wochenplan-Erstellung (Wizard)
 - [ ] Wochenplan-Bearbeitung
 - [ ] Mahlzeit-Austausch
@@ -56,7 +73,7 @@ Aktueller Stand und nächste Schritte für Ernährbär.
 
 ## 🔄 In Arbeit
 
-*(Aktuell nichts)*
+- **Frontend: Rezept-Datenbank** – Grundstruktur erstellt, API-Integration fehlt noch
 
 ---
 
@@ -71,8 +88,8 @@ Aktueller Stand und nächste Schritte für Ernährbär.
 ## 📊 Metriken
 
 **Letzte Aktualisierung:** 2026-01-24  
-**Abgeschlossene Sessions:** 3  
-**Offene Tasks:** ~15 (Tests + Frontend)
+**Abgeschlossene Sessions:** 4  
+**Offene Tasks:** ~12 (API-Integration + Frontend-Features)
 
 ---
 

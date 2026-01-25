@@ -32,7 +32,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.Property<string>("ContentType")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -41,11 +42,13 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.Property<string>("FileName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("FilePath")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<long>("FileSizeBytes")
                         .HasColumnType("bigint");
@@ -80,7 +83,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("UploadedByUserId");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Group", b =>
@@ -97,11 +100,13 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -110,7 +115,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.GroupInvite", b =>
@@ -136,14 +141,16 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("InvitedEmail")
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<bool>("IsUsed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -162,7 +169,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("Token")
                         .IsUnique();
 
-                    b.ToTable("GroupInvites");
+                    b.ToTable("GroupInvites", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.GroupMember", b =>
@@ -202,7 +209,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("UserId", "GroupId")
                         .IsUnique();
 
-                    b.ToTable("GroupMembers");
+                    b.ToTable("GroupMembers", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.MealPlan", b =>
@@ -228,7 +235,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
@@ -245,7 +253,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("MealPlans");
+                    b.ToTable("MealPlans", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.MealPlanEntry", b =>
@@ -290,7 +298,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("MealPlanId", "Date", "MealCategory");
 
-                    b.ToTable("MealPlanEntries");
+                    b.ToTable("MealPlanEntries", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Notification", b =>
@@ -302,7 +310,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ActionLink")
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -310,11 +319,14 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<bool>("IsRead")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime?>("ReadAt")
                         .HasColumnType("timestamp with time zone");
@@ -334,7 +346,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.NutritionInfo", b =>
@@ -384,7 +396,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("RecipeId")
                         .IsUnique();
 
-                    b.ToTable("NutritionInfos");
+                    b.ToTable("NutritionInfos", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Recipe", b =>
@@ -446,7 +458,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraft", b =>
@@ -466,20 +478,23 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Instructions")
-                        .HasColumnType("text");
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
 
                     b.Property<int?>("MealCategory")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("OriginalData")
                         .HasColumnType("text");
@@ -509,7 +524,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("ReviewedByUserId");
 
-                    b.ToTable("RecipeDrafts");
+                    b.ToTable("RecipeDrafts", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeDraftIngredient", b =>
@@ -527,10 +542,12 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");
@@ -542,7 +559,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Unit")
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -553,7 +571,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("RecipeDraftId");
 
-                    b.ToTable("RecipeDraftIngredients");
+                    b.ToTable("RecipeDraftIngredients", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeIngredient", b =>
@@ -571,10 +589,12 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");
@@ -586,7 +606,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Unit")
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -597,7 +618,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeIngredients");
+                    b.ToTable("RecipeIngredients", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeRating", b =>
@@ -609,7 +630,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comment")
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -617,10 +639,13 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<bool>("IsFavorite")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<int?>("Rating")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasComment("Rating from 1 to 5 (null if not rated)");
 
                     b.Property<int>("RecipeId")
                         .HasColumnType("integer");
@@ -640,7 +665,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("UserId", "RecipeId")
                         .IsUnique();
 
-                    b.ToTable("RecipeRatings");
+                    b.ToTable("RecipeRatings", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.RecipeTag", b =>
@@ -674,7 +699,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("RecipeId", "TagId")
                         .IsUnique();
 
-                    b.ToTable("RecipeTags");
+                    b.ToTable("RecipeTags", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingList", b =>
@@ -706,11 +731,14 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -723,7 +751,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("ShoppingLists");
+                    b.ToTable("ShoppingLists", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.ShoppingListItem", b =>
@@ -741,15 +769,19 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.Property<string>("IngredientName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<bool>("IsChecked")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");
 
                     b.Property<decimal?>("Quantity")
+                        .HasMaxLength(50)
                         .HasColumnType("numeric");
 
                     b.Property<int?>("RecipeIngredientId")
@@ -759,7 +791,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Unit")
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -772,7 +805,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("ShoppingListId");
 
-                    b.ToTable("ShoppingListItems");
+                    b.ToTable("ShoppingListItems", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.Tag", b =>
@@ -784,6 +817,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Category")
+                        .HasMaxLength(50)
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
@@ -796,7 +830,8 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -810,7 +845,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("Name", "GroupId")
                         .IsUnique();
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.UploadTask", b =>
@@ -827,15 +862,18 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Error")
-                        .HasColumnType("text");
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<string>("FileName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("FilePath")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("integer");
@@ -862,7 +900,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UploadTasks");
+                    b.ToTable("UploadTasks", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.User", b =>
@@ -879,15 +917,18 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("DisplayName")
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("SupabaseUserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -901,7 +942,7 @@ namespace Ernaehrbar.Adapters.Infrastructure.Migrations
                     b.HasIndex("SupabaseUserId")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Ernaehrbar.Adapters.Infrastructure.Data.Entities.File", b =>

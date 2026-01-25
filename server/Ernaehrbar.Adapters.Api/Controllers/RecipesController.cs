@@ -1,5 +1,7 @@
 using Ernaehrbar.Adapters.Api.Models;
 using Ernaehrbar.Parts.Commands;
+using Ernaehrbar.Parts.Domain;
+using Ernaehrbar.Parts.Ports;
 using Ernaehrbar.Parts.Queries;
 using Ernaehrbar.Parts.Validation;
 using MediatR;
@@ -90,27 +92,47 @@ public class RecipesController : BaseController
     }
 
     /// <summary>
-    /// Get all recipes for a group with optional filtering.
+    /// Get all recipes for a group with optional filtering, pagination, and sorting.
     /// </summary>
     /// <param name="groupId">Group ID (required)</param>
-    /// <param name="tagIds">Optional: Filter by tag IDs (comma-separated)</param>
+    /// <param name="page">Page number (1-based, default: 1)</param>
+    /// <param name="pageSize">Page size (default: 10)</param>
     /// <param name="searchTerm">Optional: Search in name and description</param>
-    /// <param name="skip">Optional: Number of items to skip (pagination)</param>
-    /// <param name="take">Optional: Number of items to take (pagination)</param>
+    /// <param name="mealCategory">Optional: Filter by meal category (Breakfast, Lunch, Dinner)</param>
+    /// <param name="source">Optional: Filter by source (Manual, Generated, Upload)</param>
+    /// <param name="favorites">Optional: Filter by favorites (true/false)</param>
+    /// <param name="tagIds">Optional: Filter by tag IDs</param>
+    /// <param name="sortBy">Sort field (default: Name)</param>
+    /// <param name="sortDirection">Sort direction (Asc/Desc, default: Asc)</param>
     [HttpGet]
     public async Task<IActionResult> GetRecipes(
         [FromQuery] int groupId,
-        [FromQuery] List<int>? tagIds = null,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10,
         [FromQuery] string? searchTerm = null,
-        [FromQuery] int? skip = null,
-        [FromQuery] int? take = null,
+        [FromQuery] MealCategory? mealCategory = null,
+        [FromQuery] RecipeSource? source = null,
+        [FromQuery] bool? favorites = null,
+        [FromQuery] List<int>? tagIds = null,
+        [FromQuery] RecipeListSorting sortBy = RecipeListSorting.Name,
+        [FromQuery] SortDirectionEnum sortDirection = SortDirectionEnum.Asc,
         CancellationToken cancellationToken = default)
     {
         try
         {
-            var query = new GetRecipesQuery(groupId, tagIds, searchTerm, skip, take);
-            var recipes = await _mediator.Send(query, cancellationToken);
-            return Ok(recipes);
+            var query = new GetRecipesQuery(
+                groupId,
+                page,
+                pageSize,
+                searchTerm,
+                mealCategory,
+                source,
+                favorites,
+                tagIds,
+                sortBy,
+                sortDirection);
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(result);
         }
         catch (Exception ex)
         {

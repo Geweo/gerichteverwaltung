@@ -3,9 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './index.css';
+import './lib/axios-config';
 
 // Import the generated route tree
-import { routeTree } from './routes/routeTree.gen';
+import { routeTree } from './routeTree.gen';
 
 // Create a new router instance
 const router = createRouter({ routeTree });

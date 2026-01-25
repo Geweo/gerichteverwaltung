@@ -1,3 +1,5 @@
+using Ernaehrbar.Parts.Domain;
+using Ernaehrbar.Parts.Queries.Common;
 using Ernaehrbar.Parts.ReadModels;
 
 namespace Ernaehrbar.Parts.Ports;
@@ -14,13 +16,18 @@ public interface IRecipeReadRepository
     Task<RecipeReadModel?> GetByIdAsync(int recipeId, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Ruft eine Liste von Rezepten mit optionaler Filterung ab.
+    /// Ruft eine paginierte Liste von Rezepten mit optionaler Filterung und Sortierung ab.
     /// </summary>
-    Task<List<RecipeReadModel>> GetRecipesAsync(
+    Task<PaginatedResult<RecipeReadModel>> GetRecipesAsync(
         int groupId,
-        List<int>? tagIds = null,
+        int page,
+        int pageSize,
         string? searchTerm = null,
-        int? skip = null,
-        int? take = null,
+        MealCategory? mealCategory = null,
+        RecipeSource? source = null,
+        bool? favorites = null,
+        List<int>? tagIds = null,
+        RecipeListSorting sortBy = RecipeListSorting.Name,
+        SortDirectionEnum sortDirection = SortDirectionEnum.Asc,
         CancellationToken cancellationToken = default);
 }

@@ -9,6 +9,12 @@ public interface IUserRepository
     /// Gets a user by ID.
     /// </summary>
     Task<UserDto?> GetByIdAsync(int userId, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Creates a new user from Supabase authentication.
+    /// Automatically called by SecurityMiddleware when a Supabase user logs in for the first time.
+    /// </summary>
+    Task<UserDto> CreateUserAsync(string supabaseUserId, string email, CancellationToken cancellationToken = default);
 }
 
 /// <summary>

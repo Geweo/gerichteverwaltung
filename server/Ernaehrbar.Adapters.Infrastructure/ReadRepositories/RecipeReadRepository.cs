@@ -1,8 +1,11 @@
 using Ernaehrbar.Adapters.Infrastructure.Data;
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
+using Ernaehrbar.Parts.Domain;
 using Ernaehrbar.Parts.Ports;
+using Ernaehrbar.Parts.Queries.Common;
 using Ernaehrbar.Parts.ReadModels;
 using Microsoft.EntityFrameworkCore;
+using RecipeSource = Ernaehrbar.Parts.Domain.RecipeSource;
 
 namespace Ernaehrbar.Adapters.Infrastructure.ReadRepositories;
 
@@ -25,6 +28,7 @@ public class RecipeReadRepository : IRecipeReadRepository
             .Include(r => r.Ingredients.OrderBy(i => i.Order))
             .Include(r => r.RecipeTags)
                 .ThenInclude(rt => rt.Tag)
+            .AsNoTracking()
             .FirstOrDefaultAsync(r => r.Id == recipeId, cancellationToken);
 
         if (recipe is null)
@@ -36,18 +40,24 @@ public class RecipeReadRepository : IRecipeReadRepository
     }
 
     /// <inheritdoc />
-    public async Task<List<RecipeReadModel>> GetRecipesAsync(
+    public async Task<PaginatedResult<RecipeReadModel>> GetRecipesAsync(
         int groupId,
-        List<int>? tagIds = null,
+        int page,
+        int pageSize,
         string? searchTerm = null,
-        int? skip = null,
-        int? take = null,
+        MealCategory? mealCategory = null,
+        RecipeSource? source = null,
+        bool? favorites = null,
+        List<int>? tagIds = null,
+        RecipeListSorting sortBy = RecipeListSorting.Name,
+        SortDirectionEnum sortDirection = SortDirectionEnum.Asc,
         CancellationToken cancellationToken = default)
     {
         var query = _context.Recipes
             .Include(r => r.Ingredients.OrderBy(i => i.Order))
             .Include(r => r.RecipeTags)
                 .ThenInclude(rt => rt.Tag)
+            .AsNoTracking()
             .Where(r => r.GroupId == groupId);
 
         // Filter nach Tags
@@ -65,20 +75,64 @@ public class RecipeReadRepository : IRecipeReadRepository
                 (r.Description != null && r.Description.ToLower().Contains(searchLower)));
         }
 
-        // Pagination
-        if (skip.HasValue)
+        // Filter nach MealCategory
+        if (mealCategory.HasValue)
         {
-            query = query.Skip(skip.Value);
+            query = query.Where(r => r.MealCategory == mealCategory.Value);
         }
 
-        if (take.HasValue)
+        // Filter nach Source
+        if (source.HasValue)
         {
-            query = query.Take(take.Value);
+            query = query.Where(r => r.Source == source.Value);
         }
 
-        var recipes = await query.ToListAsync(cancellationToken);
+        // Filter nach Favorites
+        // TODO: Implementieren, wenn UserId aus Context verfügbar ist
+        // Favorites werden über RecipeRating.IsFavorite gespeichert
+        // if (favorites.HasValue && favorites.Value)
+        // {
+        //     var userId = GetUserIdFromContext(); // TODO: Implementieren
+        //     query = query.Where(r => r.Ratings.Any(rt => rt.UserId == userId && rt.IsFavorite));
+        // }
 
-        return recipes.Select(MapToReadModel).ToList();
+        // Apply sorting
+        query = sortBy switch
+        {
+            RecipeListSorting.Name => sortDirection == SortDirectionEnum.Desc
+                ? query.OrderByDescending(r => r.Name)
+                : query.OrderBy(r => r.Name),
+            RecipeListSorting.CreatedAt => sortDirection == SortDirectionEnum.Desc
+                ? query.OrderByDescending(r => r.CreatedAt)
+                : query.OrderBy(r => r.CreatedAt),
+            RecipeListSorting.UpdatedAt => sortDirection == SortDirectionEnum.Desc
+                ? query.OrderByDescending(r => r.UpdatedAt)
+                : query.OrderBy(r => r.UpdatedAt),
+            RecipeListSorting.MealCategory => sortDirection == SortDirectionEnum.Desc
+                ? query.OrderByDescending(r => r.MealCategory)
+                : query.OrderBy(r => r.MealCategory),
+            RecipeListSorting.Source => sortDirection == SortDirectionEnum.Desc
+                ? query.OrderByDescending(r => r.Source)
+                : query.OrderBy(r => r.Source),
+            RecipeListSorting.AverageRating => sortDirection == SortDirectionEnum.Desc
+                ? query.OrderByDescending(r => r.Ratings.Any() ? r.Ratings.Average(rt => rt.Rating) : 0)
+                : query.OrderBy(r => r.Ratings.Any() ? r.Ratings.Average(rt => rt.Rating) : 0),
+            _ => query.OrderBy(r => r.Name),
+        };
+
+        // Get total count before pagination
+        var totalCount = await query.CountAsync(cancellationToken);
+
+        // Apply pagination (1-based to 0-based)
+        var skip = (page - 1) * pageSize;
+        var recipes = await query
+            .Skip(skip)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        var items = recipes.Select(MapToReadModel).ToList();
+
+        return new PaginatedResult<RecipeReadModel>(page, pageSize, totalCount, items);
     }
 
     private static RecipeReadModel MapToReadModel(Recipe recipe)

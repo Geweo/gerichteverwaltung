@@ -99,9 +99,11 @@
 ## 🎯 Nächste Schritte
 
 1. ✅ **Analyse abgeschlossen** – Offene Punkte identifiziert
-2. ⏭️ **Migrations erstellen** – Gemäß `DATENBANK-Erweiterungen.md`
-3. ⏭️ **Komponenten-Dokumentation aktualisieren** – Basierend auf Analyse
-4. ⏭️ **Backend-Implementierung** – Fehlende Features implementieren
+2. ✅ **Frontend: Rezept-Datenbank Grundstruktur** – Feature-Modul erstellt
+3. ⏭️ **API-Client generieren** – Orval konfiguriert, ausführen und integrieren
+4. ⏭️ **Migrations erstellen** – Gemäß `DATENBANK-Erweiterungen.md`
+5. ⏭️ **Backend-Implementierung** – Fehlende Features implementieren
+6. ⏭️ **Frontend: Funktionalität vervollständigen** – API-Integration, Inline-Editierung, Upload, KI
 
 ---
 
@@ -116,3 +118,4 @@
 ## 📝 Änderungshistorie
 
 - **2026-01-24:** Initiale Analyse und Dokumentation erstellt
+- **2026-01-24:** Frontend Rezept-Datenbank Grundstruktur erstellt (Feature-Modul, Komponenten, Types, Hooks)

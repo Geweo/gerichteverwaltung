@@ -1,5 +1,6 @@
 using Ernaehrbar.Adapters.Infrastructure;
 using Ernaehrbar.Adapters.Api.Middleware;
+using Ernaehrbar.Adapters.Api.Utilities;
 using Ernaehrbar.Parts.Handlers;
 using Ernaehrbar.Parts.Validation;
 using FluentValidation;
@@ -48,6 +49,9 @@ public static class ServiceCollectionExtensions
             // Falls Probleme auftreten, auf OpenApi3_0 wechseln
             opts.OpenApiVersion = OpenApiSpecVersion.OpenApi3_0;
         });
+
+        // Supabase JWT Utility for user mapping
+        services.AddSingleton<SupabaseJwtUtility>();
 
         return services;
     }

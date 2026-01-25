@@ -16,3 +16,24 @@ export const useQueryOptions = <
     staleTime: 1000 * 60 * 5, // 5 minutes
   };
 };
+
+/**
+ * Query options factory for recipes.
+ * TODO: Replace with generated query options once API client is available.
+ */
+export const queryOptions = {
+  recipes: {
+    list: (filters?: {
+      mealCategory?: string;
+      tags?: number[];
+      source?: string;
+      favorites?: boolean;
+    }) => ({
+      queryKey: ['recipes', filters] as const,
+      queryFn: async () => {
+        // TODO: Use generated API client
+        return [];
+      },
+    }),
+  },
+};

@@ -1,5 +1,6 @@
 using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Fixtures.Utilities;
+using Ernaehrbar.Parts.Domain;
 using Ernaehrbar.Parts.Ports;
 using Entities = Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 
@@ -29,7 +30,7 @@ public class RecipeFixture : SeedableFixture<DevelopmentFixtureSet>
             Servings = 4,
             PreparationTimeMinutes = 15,
             CookingTimeMinutes = 45,
-            Source = Entities.RecipeSource.Manual,
+            Source = RecipeSource.Manual,
             MealCategory = MealCategory.Dinner
         };
         await Context.Recipes.AddAsync(SpaghettiBolognese, cancellationToken);
@@ -44,7 +45,7 @@ public class RecipeFixture : SeedableFixture<DevelopmentFixtureSet>
             Servings = 2,
             PreparationTimeMinutes = 10,
             CookingTimeMinutes = 0,
-            Source = Entities.RecipeSource.Manual,
+            Source = RecipeSource.Manual,
             MealCategory = MealCategory.Lunch
         };
         await Context.Recipes.AddAsync(CaesarSalad, cancellationToken);
@@ -59,7 +60,7 @@ public class RecipeFixture : SeedableFixture<DevelopmentFixtureSet>
             Servings = 4,
             PreparationTimeMinutes = 10,
             CookingTimeMinutes = 15,
-            Source = Entities.RecipeSource.Manual,
+            Source = RecipeSource.Manual,
             MealCategory = MealCategory.Breakfast
         };
         await Context.Recipes.AddAsync(Pancakes, cancellationToken);

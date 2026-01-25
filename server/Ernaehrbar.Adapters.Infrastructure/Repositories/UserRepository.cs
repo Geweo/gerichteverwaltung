@@ -1,4 +1,5 @@
 using Ernaehrbar.Adapters.Infrastructure.Data;
+using Ernaehrbar.Adapters.Infrastructure.Data.Entities;
 using Ernaehrbar.Parts.Ports;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,25 @@ public class UserRepository : IUserRepository
         {
             return null;
         }
+
+        return new UserDto(
+            Id: entity.Id,
+            SupabaseUserId: entity.SupabaseUserId,
+            Email: entity.Email,
+            DisplayName: entity.DisplayName
+        );
+    }
+
+    public async Task<UserDto> CreateUserAsync(string supabaseUserId, string email, CancellationToken cancellationToken = default)
+    {
+        var entity = new User
+        {
+            SupabaseUserId = supabaseUserId,
+            Email = email,
+        };
+
+        await _context.Users.AddAsync(entity, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return new UserDto(
             Id: entity.Id,

@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using Ernaehrbar.Parts.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -43,32 +44,37 @@ public class ExceptionHandlingMiddleware
 
     private async Task WriteErrorResponseAsync(HttpContext context, Exception ex)
     {
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = "text/plain";
 
-        // ValidationException (FluentValidation) → 400 Bad Request
-        if (ex is ValidationException validationException)
+        // Handle specific Ernährbär exceptions
+        var (statusCode, message) = ex switch
         {
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            
-            var errors = validationException.Errors
-                .Select(e => new { field = e.PropertyName, message = e.ErrorMessage })
-                .ToList();
+            ErnaehrbarUnauthorizedException => (HttpStatusCode.Unauthorized, ex.Message ?? "Unauthorized"),
+            ErnaehrbarNotFoundException => (HttpStatusCode.NotFound, ex.Message ?? "Not Found"),
+            ErnaehrbarValidationException => (HttpStatusCode.BadRequest, ex.Message ?? "Validation Error"),
+            ValidationException validationException => (HttpStatusCode.BadRequest, GetValidationErrorMessage(validationException)),
+            _ => (HttpStatusCode.InternalServerError, GetGenericErrorMessage(ex))
+        };
 
-            var body = JsonSerializer.Serialize(new { error = "Validierungsfehler", errors });
-            await context.Response.WriteAsync(body);
-            return;
-        }
+        context.Response.StatusCode = (int)statusCode;
+        await context.Response.WriteAsync(message);
+    }
 
-        // Alle anderen Exceptions → 500 Internal Server Error
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+    private string GetValidationErrorMessage(ValidationException validationException)
+    {
+        var errors = validationException.Errors
+            .Select(e => $"{e.PropertyName}: {e.ErrorMessage}")
+            .ToList();
 
+        return string.Join("; ", errors);
+    }
+
+    private string GetGenericErrorMessage(Exception ex)
+    {
         // In Development: echte Fehlermeldung; in Production: generische Meldung
-        var message = _environment.IsDevelopment() || _environment.EnvironmentName == "Local"
+        return _environment.IsDevelopment() || _environment.EnvironmentName == "Local"
             ? ex.Message
             : "Ein unerwarteter Fehler ist aufgetreten.";
-
-        var body2 = JsonSerializer.Serialize(new { error = message });
-        await context.Response.WriteAsync(body2);
     }
 }
 

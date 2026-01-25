@@ -1,3 +1,4 @@
+using Ernaehrbar.Parts.Domain;
 using Ernaehrbar.Parts.Ports;
 
 namespace Ernaehrbar.Adapters.Infrastructure.Data.Entities;

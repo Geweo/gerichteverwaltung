@@ -23,6 +23,10 @@ export function RecipeDatabase() {
     source?: 'Manual' | 'Generated' | 'Upload';
     favorites?: boolean;
     tagIds?: number[];
+    minRating?: number;
+    dietaryType?: ('vegetarisch' | 'vegan' | 'fleisch')[];
+    effort?: ('schnell' | 'kurze Vorbereitungszeit' | 'wiederverwendbare Zutaten')[];
+    style?: ('gesund' | 'fettig' | 'Fitness' | 'Low Carb' | 'eiweißreich')[];
     page?: string;
     pageSize?: string;
     sortBy?: string;
@@ -70,6 +74,28 @@ export function RecipeDatabase() {
 
   if (search.search) {
     params.searchTerm = search.search;
+  }
+
+  if (search.minRating !== undefined && search.minRating !== null) {
+    params.minRating = search.minRating;
+  }
+
+  // TODO: Convert dietaryType, effort, style to tagIds when Tag API is available
+  // For now, we'll pass them as separate params if backend supports them
+  // Otherwise, they need to be converted to tagIds based on tag names
+  if (search.dietaryType && search.dietaryType.length > 0) {
+    // TODO: Map to tagIds when Tag API is available
+    // params.dietaryType = search.dietaryType;
+  }
+
+  if (search.effort && search.effort.length > 0) {
+    // TODO: Map to tagIds when Tag API is available
+    // params.effort = search.effort;
+  }
+
+  if (search.style && search.style.length > 0) {
+    // TODO: Map to tagIds when Tag API is available
+    // params.style = search.style;
   }
 
   if (search.sortBy) {

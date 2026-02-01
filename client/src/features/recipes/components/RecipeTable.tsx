@@ -20,6 +20,8 @@ import {
 import type { Recipe } from '../types';
 import type { PaginationState, SortingState } from '@tanstack/react-table';
 import { RecipeDetailDialog } from './RecipeDetailDialog';
+import { StarRating } from './StarRating';
+import { useRateRecipe } from '../hooks/useRateRecipe';
 
 interface RecipeTableProps {
   recipes: Recipe[];
@@ -45,6 +47,7 @@ export function RecipeTable({
   totalCount = 0,
 }: RecipeTableProps) {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const rateRecipe = useRateRecipe();
 
   if (isLoading) {
     return (
@@ -119,12 +122,23 @@ export function RecipeTable({
                     <span className="text-muted-foreground">—</span>
                   )}
                 </TableCell>
-                <TableCell>
-                  {recipe.averageRating ? (
-                    <span>{recipe.averageRating.toFixed(1)} ⭐</span>
-                  ) : (
-                    <span className="text-muted-foreground">—</span>
-                  )}
+                <TableCell
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-[140px]"
+                >
+                  <StarRating
+                    rating={recipe.userRating} // TODO: Get from recipe data when API provides it
+                    averageRating={recipe.averageRating}
+                    ratingCount={recipe.ratingCount} // TODO: Get from recipe data when API provides it
+                    onRate={(rating) => {
+                      rateRecipe.mutate({
+                        recipeId: recipe.id,
+                        rating,
+                      });
+                    }}
+                    disabled={rateRecipe.isPending}
+                    size="sm"
+                  />
                 </TableCell>
                 <TableCell>
                   {recipe.repeatCycleWeeks ? (

@@ -39,6 +39,9 @@ export interface Recipe {
   nutritionInfo?: NutritionInfo;
   averageRating?: number;
   favoriteCount?: number;
+  // User-specific data
+  userRating?: number; // Current user's rating (1-5)
+  ratingCount?: number; // Total number of ratings
 }
 
 export interface RecipeIngredient {

@@ -11,10 +11,14 @@
             "id": "a4c01592d19e217c",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Grundlagen automation-learning/sessions/session_2026-01-24_fixture-system-erklaerung.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "session_2026-01-24_fixture-system-erklaerung"
             }
           }
         ]
@@ -179,6 +183,7 @@
   "active": "a4c01592d19e217c",
   "lastOpenFiles": [
     "Grundlagen automation-learning/rules/rule_2026-01-24_ebenen-duerfen-nicht-vermischt-werden.md",
+    "Grundlagen automation-learning/solutions/solution_2026-01-24_struktur-frueh-externalisieren.md",
     "Grundlagen automation-learning/schwaechen/Untitled.base",
     "Grundlagen automation-learning/solutions/solution_2026-01-24_entity-strukturen-vor-implementierung-pruefen.md",
     "Grundlagen automation-learning/analysis/analysis_2026-01-24_build-patterns.md",
@@ -198,7 +203,6 @@
     "Grundlagen automation-learning/rules/rule_2026-01-24_struktur-wird-frueh-externalisiert.md",
     "Grundlagen automation-learning/rules/rule_2026-01-24_explizite-zieldefinition-ist-pflicht.md",
     "Grundlagen automation-learning/solutions/solution_2026-01-24_namespace-aliases-bei-mehrdeutigkeiten.md",
-    "Grundlagen automation-learning/solutions/solution_2026-01-24_struktur-frueh-externalisieren.md",
     "Grundlagen automation-learning/solutions/solution_2026-01-24_trennung-der-ebenen-erzwingen.md",
     "Grundlagen automation-learning/solutions/solution_2026-01-24_explizite-zieldefinition-erzwingen.md",
     "Grundlagen automation-learning/schwaechen/schwaechen_2026-01-24_namespace-mehrdeutigkeiten-parallele-strukturen.md",

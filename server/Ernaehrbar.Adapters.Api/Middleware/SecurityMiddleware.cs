@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Ernaehrbar.Adapters.Api.Utilities;
 using Ernaehrbar.Parts.Ports;
 using Serilog.Context;

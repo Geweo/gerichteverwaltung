@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { RecipeCreateForm } from './RecipeCreateForm';
+import { RecipeAIGenerateForm } from './RecipeAIGenerateForm';
 
 interface RecipeCreateDialogProps {
   open: boolean;
@@ -28,7 +29,7 @@ export function RecipeCreateDialog({ open, onOpenChange }: RecipeCreateDialogPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Neues Rezept erstellen</DialogTitle>
           <DialogDescription>
@@ -97,11 +98,10 @@ export function RecipeCreateDialog({ open, onOpenChange }: RecipeCreateDialogPro
               </div>
             )}
             {mode === 'ai' && (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground">
-                  KI-Generierung wird implementiert...
-                </p>
-              </div>
+              <RecipeAIGenerateForm
+                onSuccess={() => onOpenChange(false)}
+                onCancel={() => setMode('select')}
+              />
             )}
           </div>
         )}
